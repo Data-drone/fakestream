@@ -1,0 +1,10 @@
+version: "2.1"
+services:
+    node:
+        image: fakestream
+        ports:
+            - 8080:8080
+    registry:
+        image: apache/nifi-registry:latest
+        ports:
+            - 18080:18080
