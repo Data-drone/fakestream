@@ -1,7 +1,12 @@
-version: "2.1"
+# quick demo script with nifi and kafka with a registry too
+
+version: "3.7"
 services:
     node:
-        image: fakestream
+        build:
+            context: ../docker
+            dockerfile: Dockerfile
+        image: fakestream:latest
         ports:
             - 8080:8080
     registry:
