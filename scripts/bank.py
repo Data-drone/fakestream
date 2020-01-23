@@ -20,6 +20,7 @@ def make_parser():
 
     return parser
 
+
 def main(args):
     
     fake = Faker()
