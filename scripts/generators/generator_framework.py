@@ -5,10 +5,9 @@
 class DataGenerator:
 
     @abstractmethod
-    def __init__(self, tuples_to_emit_per_call: int):
-
-        self.tuples_per_emit = tuples_to_emit_per_call
-
+    def __init__(self):
+        pass
+        
     @abstractmethod
-    def emit(self) -> list:
+    def emit(self) -> dict:
         pass
