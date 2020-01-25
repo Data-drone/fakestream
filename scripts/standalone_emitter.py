@@ -6,7 +6,9 @@
 # 
 
 import logging
-
+import logging.handlers
+from generators.generator_bank import BankGenerator
+from argparse import ArgumentParser
 #TODO
 # construct logger object
 # with log rotation
@@ -15,5 +17,39 @@ import logging
 # call generators
 # and emit
 
+logger = logging.getLogger('bank_generator')
+logger.setLevel(logging.INFO)
+fh = logging.FileHandler('log/data.log')
+fh.setLevel(logging.INFO)
+formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+fh.setFormatter(formatter)
+
+logger.addHandler(fh)
+
+def make_parser():
+
+    """
+    argument parser for main function
+    """
+
+    parser = ArgumentParser(description="Create dummy data for streaming examples")
+    parser.add_argument('--tuples-per-emit', '-t', type=int, default=1,
+                            help='number of tuples to emit at once')
+
+    return parser
+
+
+
+
 if __name__ == '__main__':
-    pass
+    
+    new_generator = BankGenerator(tuples_per_emit=2)
+    stop = False
+
+    while(stop!=True):
+
+        results = new_generator.emit()
+        
+        for item in results:
+            logger.info(results)
+        #logger.info(results)

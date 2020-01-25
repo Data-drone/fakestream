@@ -13,6 +13,6 @@ COPY requirements.txt /tmp/requirements.txt
 
 RUN pip3 install -r /tmp/requirements.txt
 
-COPY ../scripts /tmp/scripts
+#COPY ../scripts /tmp/scripts
 
-RUN chown nifi:nifi /tmp/scripts/*
+#RUN chown nifi:nifi /tmp/scripts/*

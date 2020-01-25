@@ -7,6 +7,10 @@ services:
             context: ../docker
             dockerfile: Dockerfile
         image: fakestream:latest
+        volumes:
+            - "../scripts:/opt/scripts"
+            - "../scripts/generators:/opt/scripts/generators"
+            - "../scripts/log:/opt/scripts/log"
         ports:
             - 8080:8080
     registry:

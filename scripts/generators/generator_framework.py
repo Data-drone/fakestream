@@ -4,10 +4,10 @@
 
 class DataGenerator:
 
-    @abstractmethod
+    #@abstractmethod
     def __init__(self):
         pass
         
-    @abstractmethod
+    #@abstractmethod
     def emit(self) -> dict:
         pass
