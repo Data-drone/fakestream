@@ -16,10 +16,11 @@ from argparse import ArgumentParser
 
 # call generators
 # and emit
+LOG_FILENAME = 'log/data.log'
 
 logger = logging.getLogger('bank_generator')
 logger.setLevel(logging.INFO)
-fh = logging.FileHandler('log/data.log')
+fh = logging.handlers.RotatingFileHandler(LOG_FILENAME, maxBytes=10*1024*1024, backupCount=5)
 fh.setLevel(logging.INFO)
 formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 fh.setFormatter(formatter)
