@@ -1,136 +1,190 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <template encoding-version="1.3">
     <description></description>
-    <groupId>a3848022-016f-1000-96bc-4634df64f1ba</groupId>
-    <name>bank_kafka</name>
+    <groupId>dc6ad161-016f-1000-0a04-bfeb39c0d485</groupId>
+    <name>bank_kafka_2</name>
     <snippet>
+        <connections>
+            <id>2460f6f4-cac1-30c8-0000-000000000000</id>
+            <parentGroupId>110ebe87-a91e-3c85-0000-000000000000</parentGroupId>
+            <backPressureDataSizeThreshold>1 GB</backPressureDataSizeThreshold>
+            <backPressureObjectThreshold>10000</backPressureObjectThreshold>
+            <destination>
+                <groupId>110ebe87-a91e-3c85-0000-000000000000</groupId>
+                <id>b7891a71-786f-3807-0000-000000000000</id>
+                <type>FUNNEL</type>
+            </destination>
+            <flowFileExpiration>0 sec</flowFileExpiration>
+            <labelIndex>1</labelIndex>
+            <loadBalanceCompression>DO_NOT_COMPRESS</loadBalanceCompression>
+            <loadBalancePartitionAttribute></loadBalancePartitionAttribute>
+            <loadBalanceStatus>LOAD_BALANCE_NOT_CONFIGURED</loadBalanceStatus>
+            <loadBalanceStrategy>DO_NOT_LOAD_BALANCE</loadBalanceStrategy>
+            <name></name>
+            <selectedRelationships>unmatched</selectedRelationships>
+            <source>
+                <groupId>110ebe87-a91e-3c85-0000-000000000000</groupId>
+                <id>91db6753-7133-3062-0000-000000000000</id>
+                <type>PROCESSOR</type>
+            </source>
+            <zIndex>0</zIndex>
+        </connections>
+        <connections>
+            <id>27f6f8d4-17e6-3746-0000-000000000000</id>
+            <parentGroupId>110ebe87-a91e-3c85-0000-000000000000</parentGroupId>
+            <backPressureDataSizeThreshold>1 GB</backPressureDataSizeThreshold>
+            <backPressureObjectThreshold>10000</backPressureObjectThreshold>
+            <destination>
+                <groupId>110ebe87-a91e-3c85-0000-000000000000</groupId>
+                <id>774f9c6a-a175-3f3d-0000-000000000000</id>
+                <type>FUNNEL</type>
+            </destination>
+            <flowFileExpiration>0 sec</flowFileExpiration>
+            <labelIndex>1</labelIndex>
+            <loadBalanceCompression>DO_NOT_COMPRESS</loadBalanceCompression>
+            <loadBalancePartitionAttribute></loadBalancePartitionAttribute>
+            <loadBalanceStatus>LOAD_BALANCE_NOT_CONFIGURED</loadBalanceStatus>
+            <loadBalanceStrategy>DO_NOT_LOAD_BALANCE</loadBalanceStrategy>
+            <name></name>
+            <selectedRelationships>failure</selectedRelationships>
+            <source>
+                <groupId>110ebe87-a91e-3c85-0000-000000000000</groupId>
+                <id>55ac6bd7-4740-39c5-0000-000000000000</id>
+                <type>PROCESSOR</type>
+            </source>
+            <zIndex>0</zIndex>
+        </connections>
+        <connections>
+            <id>42ce601b-e6d7-3b24-0000-000000000000</id>
+            <parentGroupId>110ebe87-a91e-3c85-0000-000000000000</parentGroupId>
+            <backPressureDataSizeThreshold>1 GB</backPressureDataSizeThreshold>
+            <backPressureObjectThreshold>10000</backPressureObjectThreshold>
+            <destination>
+                <groupId>110ebe87-a91e-3c85-0000-000000000000</groupId>
+                <id>3ea2529a-2ef2-3593-0000-000000000000</id>
+                <type>PROCESSOR</type>
+            </destination>
+            <flowFileExpiration>0 sec</flowFileExpiration>
+            <labelIndex>1</labelIndex>
+            <loadBalanceCompression>DO_NOT_COMPRESS</loadBalanceCompression>
+            <loadBalancePartitionAttribute></loadBalancePartitionAttribute>
+            <loadBalanceStatus>LOAD_BALANCE_NOT_CONFIGURED</loadBalanceStatus>
+            <loadBalanceStrategy>DO_NOT_LOAD_BALANCE</loadBalanceStrategy>
+            <name></name>
+            <selectedRelationships>success</selectedRelationships>
+            <source>
+                <groupId>110ebe87-a91e-3c85-0000-000000000000</groupId>
+                <id>b6e46c19-1672-3a43-0000-000000000000</id>
+                <type>PROCESSOR</type>
+            </source>
+            <zIndex>0</zIndex>
+        </connections>
+        <connections>
+            <id>cf04bb83-ee23-3da7-0000-000000000000</id>
+            <parentGroupId>110ebe87-a91e-3c85-0000-000000000000</parentGroupId>
+            <backPressureDataSizeThreshold>1 GB</backPressureDataSizeThreshold>
+            <backPressureObjectThreshold>10000</backPressureObjectThreshold>
+            <destination>
+                <groupId>110ebe87-a91e-3c85-0000-000000000000</groupId>
+                <id>91db6753-7133-3062-0000-000000000000</id>
+                <type>PROCESSOR</type>
+            </destination>
+            <flowFileExpiration>0 sec</flowFileExpiration>
+            <labelIndex>1</labelIndex>
+            <loadBalanceCompression>DO_NOT_COMPRESS</loadBalanceCompression>
+            <loadBalancePartitionAttribute></loadBalancePartitionAttribute>
+            <loadBalanceStatus>LOAD_BALANCE_NOT_CONFIGURED</loadBalanceStatus>
+            <loadBalanceStrategy>DO_NOT_LOAD_BALANCE</loadBalanceStrategy>
+            <name></name>
+            <selectedRelationships>matched</selectedRelationships>
+            <source>
+                <groupId>110ebe87-a91e-3c85-0000-000000000000</groupId>
+                <id>3ea2529a-2ef2-3593-0000-000000000000</id>
+                <type>PROCESSOR</type>
+            </source>
+            <zIndex>0</zIndex>
+        </connections>
+        <connections>
+            <id>cf65b58a-8073-38b5-0000-000000000000</id>
+            <parentGroupId>110ebe87-a91e-3c85-0000-000000000000</parentGroupId>
+            <backPressureDataSizeThreshold>1 GB</backPressureDataSizeThreshold>
+            <backPressureObjectThreshold>10000</backPressureObjectThreshold>
+            <destination>
+                <groupId>110ebe87-a91e-3c85-0000-000000000000</groupId>
+                <id>2bcac72a-e86c-3ad1-0000-000000000000</id>
+                <type>FUNNEL</type>
+            </destination>
+            <flowFileExpiration>0 sec</flowFileExpiration>
+            <labelIndex>1</labelIndex>
+            <loadBalanceCompression>DO_NOT_COMPRESS</loadBalanceCompression>
+            <loadBalancePartitionAttribute></loadBalancePartitionAttribute>
+            <loadBalanceStatus>LOAD_BALANCE_NOT_CONFIGURED</loadBalanceStatus>
+            <loadBalanceStrategy>DO_NOT_LOAD_BALANCE</loadBalanceStrategy>
+            <name></name>
+            <selectedRelationships>failure</selectedRelationships>
+            <selectedRelationships>unmatched</selectedRelationships>
+            <source>
+                <groupId>110ebe87-a91e-3c85-0000-000000000000</groupId>
+                <id>3ea2529a-2ef2-3593-0000-000000000000</id>
+                <type>PROCESSOR</type>
+            </source>
+            <zIndex>0</zIndex>
+        </connections>
+        <connections>
+            <id>e8dfe8cb-33a3-3834-0000-000000000000</id>
+            <parentGroupId>110ebe87-a91e-3c85-0000-000000000000</parentGroupId>
+            <backPressureDataSizeThreshold>1 GB</backPressureDataSizeThreshold>
+            <backPressureObjectThreshold>10000</backPressureObjectThreshold>
+            <destination>
+                <groupId>110ebe87-a91e-3c85-0000-000000000000</groupId>
+                <id>55ac6bd7-4740-39c5-0000-000000000000</id>
+                <type>PROCESSOR</type>
+            </destination>
+            <flowFileExpiration>0 sec</flowFileExpiration>
+            <labelIndex>1</labelIndex>
+            <loadBalanceCompression>DO_NOT_COMPRESS</loadBalanceCompression>
+            <loadBalancePartitionAttribute></loadBalancePartitionAttribute>
+            <loadBalanceStatus>LOAD_BALANCE_NOT_CONFIGURED</loadBalanceStatus>
+            <loadBalanceStrategy>DO_NOT_LOAD_BALANCE</loadBalanceStrategy>
+            <name></name>
+            <selectedRelationships>matched</selectedRelationships>
+            <source>
+                <groupId>110ebe87-a91e-3c85-0000-000000000000</groupId>
+                <id>91db6753-7133-3062-0000-000000000000</id>
+                <type>PROCESSOR</type>
+            </source>
+            <zIndex>0</zIndex>
+        </connections>
         <funnels>
-            <id>711344b8-97ca-3d2a-0000-000000000000</id>
-            <parentGroupId>df214650-a8ca-3e40-0000-000000000000</parentGroupId>
+            <id>2bcac72a-e86c-3ad1-0000-000000000000</id>
+            <parentGroupId>110ebe87-a91e-3c85-0000-000000000000</parentGroupId>
             <position>
                 <x>0.0</x>
                 <y>256.0</y>
             </position>
         </funnels>
         <funnels>
-            <id>c0e5fe0a-7379-32bd-0000-000000000000</id>
-            <parentGroupId>df214650-a8ca-3e40-0000-000000000000</parentGroupId>
+            <id>774f9c6a-a175-3f3d-0000-000000000000</id>
+            <parentGroupId>110ebe87-a91e-3c85-0000-000000000000</parentGroupId>
             <position>
                 <x>191.0</x>
                 <y>885.0</y>
             </position>
         </funnels>
         <funnels>
-            <id>fbaaa2ca-e8bb-3865-0000-000000000000</id>
-            <parentGroupId>df214650-a8ca-3e40-0000-000000000000</parentGroupId>
+            <id>b7891a71-786f-3807-0000-000000000000</id>
+            <parentGroupId>110ebe87-a91e-3c85-0000-000000000000</parentGroupId>
             <position>
                 <x>192.0</x>
                 <y>784.0</y>
             </position>
         </funnels>
         <processors>
-            <id>1b88b95d-f041-377e-0000-000000000000</id>
-            <parentGroupId>df214650-a8ca-3e40-0000-000000000000</parentGroupId>
+            <id>3ea2529a-2ef2-3593-0000-000000000000</id>
+            <parentGroupId>110ebe87-a91e-3c85-0000-000000000000</parentGroupId>
             <position>
-                <x>320.0</x>
-                <y>0.0</y>
-            </position>
-            <bundle>
-                <artifact>nifi-standard-nar</artifact>
-                <group>org.apache.nifi</group>
-                <version>1.10.0</version>
-            </bundle>
-            <config>
-                <bulletinLevel>WARN</bulletinLevel>
-                <comments></comments>
-                <concurrentlySchedulableTaskCount>1</concurrentlySchedulableTaskCount>
-                <descriptors>
-                    <entry>
-                        <key>Command</key>
-                        <value>
-                            <name>Command</name>
-                        </value>
-                    </entry>
-                    <entry>
-                        <key>Command Arguments</key>
-                        <value>
-                            <name>Command Arguments</name>
-                        </value>
-                    </entry>
-                    <entry>
-                        <key>Batch Duration</key>
-                        <value>
-                            <name>Batch Duration</name>
-                        </value>
-                    </entry>
-                    <entry>
-                        <key>Redirect Error Stream</key>
-                        <value>
-                            <name>Redirect Error Stream</name>
-                        </value>
-                    </entry>
-                    <entry>
-                        <key>Working Directory</key>
-                        <value>
-                            <name>Working Directory</name>
-                        </value>
-                    </entry>
-                    <entry>
-                        <key>Argument Delimiter</key>
-                        <value>
-                            <name>Argument Delimiter</name>
-                        </value>
-                    </entry>
-                </descriptors>
-                <executionNode>ALL</executionNode>
-                <lossTolerant>false</lossTolerant>
-                <penaltyDuration>30 sec</penaltyDuration>
-                <properties>
-                    <entry>
-                        <key>Command</key>
-                        <value>python3</value>
-                    </entry>
-                    <entry>
-                        <key>Command Arguments</key>
-                        <value>bank.py</value>
-                    </entry>
-                    <entry>
-                        <key>Batch Duration</key>
-                    </entry>
-                    <entry>
-                        <key>Redirect Error Stream</key>
-                        <value>false</value>
-                    </entry>
-                    <entry>
-                        <key>Working Directory</key>
-                        <value>/tmp/scripts</value>
-                    </entry>
-                    <entry>
-                        <key>Argument Delimiter</key>
-                        <value> </value>
-                    </entry>
-                </properties>
-                <runDurationMillis>0</runDurationMillis>
-                <schedulingPeriod>0 sec</schedulingPeriod>
-                <schedulingStrategy>TIMER_DRIVEN</schedulingStrategy>
-                <yieldDuration>1 sec</yieldDuration>
-            </config>
-            <executionNodeRestricted>false</executionNodeRestricted>
-            <name>ExecuteProcess</name>
-            <relationships>
-                <autoTerminate>false</autoTerminate>
-                <name>success</name>
-            </relationships>
-            <state>STOPPED</state>
-            <style/>
-            <type>org.apache.nifi.processors.standard.ExecuteProcess</type>
-        </processors>
-        <processors>
-            <id>51b83101-89c9-3e95-0000-000000000000</id>
-            <parentGroupId>df214650-a8ca-3e40-0000-000000000000</parentGroupId>
-            <position>
-                <x>320.0</x>
-                <y>216.0</y>
+                <x>319.0</x>
+                <y>221.0</y>
             </position>
             <bundle>
                 <artifact>nifi-standard-nar</artifact>
@@ -222,8 +276,8 @@
             <type>org.apache.nifi.processors.standard.EvaluateJsonPath</type>
         </processors>
         <processors>
-            <id>876294f0-d61d-34d1-0000-000000000000</id>
-            <parentGroupId>df214650-a8ca-3e40-0000-000000000000</parentGroupId>
+            <id>55ac6bd7-4740-39c5-0000-000000000000</id>
+            <parentGroupId>110ebe87-a91e-3c85-0000-000000000000</parentGroupId>
             <position>
                 <x>663.0</x>
                 <y>781.0</y>
@@ -401,8 +455,8 @@
             <type>org.apache.nifi.processors.kafka.pubsub.PublishKafka</type>
         </processors>
         <processors>
-            <id>c2227810-c802-383b-0000-000000000000</id>
-            <parentGroupId>df214650-a8ca-3e40-0000-000000000000</parentGroupId>
+            <id>91db6753-7133-3062-0000-000000000000</id>
+            <parentGroupId>110ebe87-a91e-3c85-0000-000000000000</parentGroupId>
             <position>
                 <x>320.0</x>
                 <y>464.0</y>
@@ -462,6 +516,103 @@
             <style/>
             <type>org.apache.nifi.processors.standard.RouteOnAttribute</type>
         </processors>
+        <processors>
+            <id>b6e46c19-1672-3a43-0000-000000000000</id>
+            <parentGroupId>110ebe87-a91e-3c85-0000-000000000000</parentGroupId>
+            <position>
+                <x>320.0</x>
+                <y>0.0</y>
+            </position>
+            <bundle>
+                <artifact>nifi-standard-nar</artifact>
+                <group>org.apache.nifi</group>
+                <version>1.10.0</version>
+            </bundle>
+            <config>
+                <bulletinLevel>WARN</bulletinLevel>
+                <comments></comments>
+                <concurrentlySchedulableTaskCount>1</concurrentlySchedulableTaskCount>
+                <descriptors>
+                    <entry>
+                        <key>Command</key>
+                        <value>
+                            <name>Command</name>
+                        </value>
+                    </entry>
+                    <entry>
+                        <key>Command Arguments</key>
+                        <value>
+                            <name>Command Arguments</name>
+                        </value>
+                    </entry>
+                    <entry>
+                        <key>Batch Duration</key>
+                        <value>
+                            <name>Batch Duration</name>
+                        </value>
+                    </entry>
+                    <entry>
+                        <key>Redirect Error Stream</key>
+                        <value>
+                            <name>Redirect Error Stream</name>
+                        </value>
+                    </entry>
+                    <entry>
+                        <key>Working Directory</key>
+                        <value>
+                            <name>Working Directory</name>
+                        </value>
+                    </entry>
+                    <entry>
+                        <key>Argument Delimiter</key>
+                        <value>
+                            <name>Argument Delimiter</name>
+                        </value>
+                    </entry>
+                </descriptors>
+                <executionNode>ALL</executionNode>
+                <lossTolerant>false</lossTolerant>
+                <penaltyDuration>30 sec</penaltyDuration>
+                <properties>
+                    <entry>
+                        <key>Command</key>
+                        <value>python3</value>
+                    </entry>
+                    <entry>
+                        <key>Command Arguments</key>
+                        <value>bank.py</value>
+                    </entry>
+                    <entry>
+                        <key>Batch Duration</key>
+                    </entry>
+                    <entry>
+                        <key>Redirect Error Stream</key>
+                        <value>false</value>
+                    </entry>
+                    <entry>
+                        <key>Working Directory</key>
+                        <value>/tmp/scripts</value>
+                    </entry>
+                    <entry>
+                        <key>Argument Delimiter</key>
+                        <value> </value>
+                    </entry>
+                </properties>
+                <runDurationMillis>0</runDurationMillis>
+                <schedulingPeriod>0 sec</schedulingPeriod>
+                <schedulingStrategy>TIMER_DRIVEN</schedulingStrategy>
+                <yieldDuration>1 sec</yieldDuration>
+            </config>
+            <executionNodeRestricted>false</executionNodeRestricted>
+            <name>ExecuteProcess</name>
+            <relationships>
+                <autoTerminate>false</autoTerminate>
+                <name>success</name>
+            </relationships>
+            <state>STOPPED</state>
+            <style/>
+            <type>org.apache.nifi.processors.standard.ExecuteProcess</type>
+        </processors>
     </snippet>
-    <timestamp>01/14/2020 13:56:11 UTC</timestamp>
+    <timestamp>01/25/2020 11:55:54 UTC</timestamp>
 </template>
