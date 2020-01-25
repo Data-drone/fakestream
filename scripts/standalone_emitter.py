@@ -50,6 +50,5 @@ if __name__ == '__main__':
 
         results = new_generator.emit()
         
-        for item in results:
-            logger.info(results)
+        logger.info(results)
         #logger.info(results)

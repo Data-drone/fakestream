@@ -52,7 +52,7 @@ class BankGenerator(DataGenerator):
             else:
                 value = dist_1
 
-            data_tuple = {'card_identifier': card_id, 'timestamp': current_time, 'value':value}
+            data_tuple = {'card_identifier': card_id, 'timestamp': current_time, 'value':value[0]}
 
             data_list.append(data_tuple)
 
