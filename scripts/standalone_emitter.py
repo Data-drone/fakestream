@@ -9,6 +9,8 @@ import logging
 import logging.handlers
 from generators.generator_bank import BankGenerator
 from argparse import ArgumentParser
+import json
+
 #TODO
 # construct logger object
 # with log rotation
@@ -22,7 +24,7 @@ logger = logging.getLogger('bank_generator')
 logger.setLevel(logging.INFO)
 fh = logging.handlers.RotatingFileHandler(LOG_FILENAME, maxBytes=10*1024*1024, backupCount=5)
 fh.setLevel(logging.INFO)
-formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+formatter = logging.Formatter('%(message)s')
 fh.setFormatter(formatter)
 
 logger.addHandler(fh)
@@ -51,5 +53,6 @@ if __name__ == '__main__':
 
         results = new_generator.emit()
         
-        logger.info(results)
+        for result in results:
+            logger.info(json.dumps(result))
         #logger.info(results)

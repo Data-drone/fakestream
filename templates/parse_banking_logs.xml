@@ -2,33 +2,8 @@
 <template encoding-version="1.3">
     <description></description>
     <groupId>dc9152e5-016f-1000-d215-3429f401f319</groupId>
-    <name>log_reader</name>
+    <name>parse_banking_logs</name>
     <snippet>
-        <connections>
-            <id>05f0d209-f305-36a1-0000-000000000000</id>
-            <parentGroupId>c2de80ef-0680-3405-0000-000000000000</parentGroupId>
-            <backPressureDataSizeThreshold>1 GB</backPressureDataSizeThreshold>
-            <backPressureObjectThreshold>10000</backPressureObjectThreshold>
-            <destination>
-                <groupId>c2de80ef-0680-3405-0000-000000000000</groupId>
-                <id>6c270c84-46fe-3be8-0000-000000000000</id>
-                <type>FUNNEL</type>
-            </destination>
-            <flowFileExpiration>0 sec</flowFileExpiration>
-            <labelIndex>1</labelIndex>
-            <loadBalanceCompression>DO_NOT_COMPRESS</loadBalanceCompression>
-            <loadBalancePartitionAttribute></loadBalancePartitionAttribute>
-            <loadBalanceStatus>LOAD_BALANCE_NOT_CONFIGURED</loadBalanceStatus>
-            <loadBalanceStrategy>DO_NOT_LOAD_BALANCE</loadBalanceStrategy>
-            <name></name>
-            <selectedRelationships>unmatched</selectedRelationships>
-            <source>
-                <groupId>c2de80ef-0680-3405-0000-000000000000</groupId>
-                <id>d7ddc4ea-3276-3eba-0000-000000000000</id>
-                <type>PROCESSOR</type>
-            </source>
-            <zIndex>0</zIndex>
-        </connections>
         <connections>
             <id>15580419-934b-39fb-0000-000000000000</id>
             <parentGroupId>c2de80ef-0680-3405-0000-000000000000</parentGroupId>
@@ -55,13 +30,13 @@
             <zIndex>0</zIndex>
         </connections>
         <connections>
-            <id>31f525b7-2924-3a61-0000-000000000000</id>
+            <id>5fef80d8-80db-314a-0000-000000000000</id>
             <parentGroupId>c2de80ef-0680-3405-0000-000000000000</parentGroupId>
             <backPressureDataSizeThreshold>1 GB</backPressureDataSizeThreshold>
             <backPressureObjectThreshold>10000</backPressureObjectThreshold>
             <destination>
                 <groupId>c2de80ef-0680-3405-0000-000000000000</groupId>
-                <id>d7ddc4ea-3276-3eba-0000-000000000000</id>
+                <id>ced1b978-29a2-3659-0000-000000000000</id>
                 <type>PROCESSOR</type>
             </destination>
             <flowFileExpiration>0 sec</flowFileExpiration>
@@ -80,14 +55,14 @@
             <zIndex>0</zIndex>
         </connections>
         <connections>
-            <id>651f4054-1482-3f70-0000-000000000000</id>
+            <id>657b6107-f88d-3bc9-0000-000000000000</id>
             <parentGroupId>c2de80ef-0680-3405-0000-000000000000</parentGroupId>
             <backPressureDataSizeThreshold>1 GB</backPressureDataSizeThreshold>
             <backPressureObjectThreshold>10000</backPressureObjectThreshold>
             <destination>
                 <groupId>c2de80ef-0680-3405-0000-000000000000</groupId>
-                <id>6c270c84-46fe-3be8-0000-000000000000</id>
-                <type>FUNNEL</type>
+                <id>76e3cfd2-d061-3115-0000-000000000000</id>
+                <type>PROCESSOR</type>
             </destination>
             <flowFileExpiration>0 sec</flowFileExpiration>
             <labelIndex>1</labelIndex>
@@ -99,19 +74,19 @@
             <selectedRelationships>failure</selectedRelationships>
             <source>
                 <groupId>c2de80ef-0680-3405-0000-000000000000</groupId>
-                <id>4d6da363-5f4d-38d8-0000-000000000000</id>
+                <id>ced1b978-29a2-3659-0000-000000000000</id>
                 <type>PROCESSOR</type>
             </source>
             <zIndex>0</zIndex>
         </connections>
         <connections>
-            <id>e7fa3270-23ce-30fb-0000-000000000000</id>
+            <id>6abe9196-e796-3ee9-0000-000000000000</id>
             <parentGroupId>c2de80ef-0680-3405-0000-000000000000</parentGroupId>
             <backPressureDataSizeThreshold>1 GB</backPressureDataSizeThreshold>
             <backPressureObjectThreshold>10000</backPressureObjectThreshold>
             <destination>
                 <groupId>c2de80ef-0680-3405-0000-000000000000</groupId>
-                <id>4d6da363-5f4d-38d8-0000-000000000000</id>
+                <id>f1c1b8d3-05fe-3191-0000-000000000000</id>
                 <type>PROCESSOR</type>
             </destination>
             <flowFileExpiration>0 sec</flowFileExpiration>
@@ -124,7 +99,40 @@
             <selectedRelationships>matched</selectedRelationships>
             <source>
                 <groupId>c2de80ef-0680-3405-0000-000000000000</groupId>
-                <id>d7ddc4ea-3276-3eba-0000-000000000000</id>
+                <id>ced1b978-29a2-3659-0000-000000000000</id>
+                <type>PROCESSOR</type>
+            </source>
+            <zIndex>0</zIndex>
+        </connections>
+        <connections>
+            <id>86fdb567-97c7-3980-0000-000000000000</id>
+            <parentGroupId>c2de80ef-0680-3405-0000-000000000000</parentGroupId>
+            <backPressureDataSizeThreshold>1 GB</backPressureDataSizeThreshold>
+            <backPressureObjectThreshold>10000</backPressureObjectThreshold>
+            <bends>
+                <x>0.0</x>
+                <y>672.0</y>
+            </bends>
+            <bends>
+                <x>0.0</x>
+                <y>600.0</y>
+            </bends>
+            <destination>
+                <groupId>c2de80ef-0680-3405-0000-000000000000</groupId>
+                <id>ced1b978-29a2-3659-0000-000000000000</id>
+                <type>PROCESSOR</type>
+            </destination>
+            <flowFileExpiration>0 sec</flowFileExpiration>
+            <labelIndex>0</labelIndex>
+            <loadBalanceCompression>DO_NOT_COMPRESS</loadBalanceCompression>
+            <loadBalancePartitionAttribute></loadBalancePartitionAttribute>
+            <loadBalanceStatus>LOAD_BALANCE_NOT_CONFIGURED</loadBalanceStatus>
+            <loadBalanceStrategy>DO_NOT_LOAD_BALANCE</loadBalanceStrategy>
+            <name></name>
+            <selectedRelationships>unmatched</selectedRelationships>
+            <source>
+                <groupId>c2de80ef-0680-3405-0000-000000000000</groupId>
+                <id>ced1b978-29a2-3659-0000-000000000000</id>
                 <type>PROCESSOR</type>
             </source>
             <zIndex>0</zIndex>
@@ -135,12 +143,12 @@
             <backPressureDataSizeThreshold>1 GB</backPressureDataSizeThreshold>
             <backPressureObjectThreshold>10000</backPressureObjectThreshold>
             <bends>
-                <x>1088.0</x>
-                <y>0.0</y>
+                <x>736.88525390625</x>
+                <y>207.27378845214844</y>
             </bends>
             <bends>
-                <x>1088.0</x>
-                <y>120.0</y>
+                <x>736.88525390625</x>
+                <y>327.27378845214844</y>
             </bends>
             <destination>
                 <groupId>c2de80ef-0680-3405-0000-000000000000</groupId>
@@ -162,157 +170,12 @@
             </source>
             <zIndex>0</zIndex>
         </connections>
-        <connections>
-            <id>f8451bac-20f4-3327-0000-000000000000</id>
-            <parentGroupId>c2de80ef-0680-3405-0000-000000000000</parentGroupId>
-            <backPressureDataSizeThreshold>1 GB</backPressureDataSizeThreshold>
-            <backPressureObjectThreshold>10000</backPressureObjectThreshold>
-            <destination>
-                <groupId>c2de80ef-0680-3405-0000-000000000000</groupId>
-                <id>b4878123-b49b-3312-0000-000000000000</id>
-                <type>PROCESSOR</type>
-            </destination>
-            <flowFileExpiration>0 sec</flowFileExpiration>
-            <labelIndex>1</labelIndex>
-            <loadBalanceCompression>DO_NOT_COMPRESS</loadBalanceCompression>
-            <loadBalancePartitionAttribute></loadBalancePartitionAttribute>
-            <loadBalanceStatus>LOAD_BALANCE_NOT_CONFIGURED</loadBalanceStatus>
-            <loadBalanceStrategy>DO_NOT_LOAD_BALANCE</loadBalanceStrategy>
-            <name></name>
-            <selectedRelationships>success</selectedRelationships>
-            <source>
-                <groupId>c2de80ef-0680-3405-0000-000000000000</groupId>
-                <id>4d6da363-5f4d-38d8-0000-000000000000</id>
-                <type>PROCESSOR</type>
-            </source>
-            <zIndex>0</zIndex>
-        </connections>
-        <funnels>
-            <id>6c270c84-46fe-3be8-0000-000000000000</id>
-            <parentGroupId>c2de80ef-0680-3405-0000-000000000000</parentGroupId>
-            <position>
-                <x>1936.0</x>
-                <y>312.0</y>
-            </position>
-        </funnels>
-        <processors>
-            <id>4d6da363-5f4d-38d8-0000-000000000000</id>
-            <parentGroupId>c2de80ef-0680-3405-0000-000000000000</parentGroupId>
-            <position>
-                <x>1448.0</x>
-                <y>40.0</y>
-            </position>
-            <bundle>
-                <artifact>nifi-standard-nar</artifact>
-                <group>org.apache.nifi</group>
-                <version>1.10.0</version>
-            </bundle>
-            <config>
-                <bulletinLevel>WARN</bulletinLevel>
-                <comments></comments>
-                <concurrentlySchedulableTaskCount>1</concurrentlySchedulableTaskCount>
-                <descriptors>
-                    <entry>
-                        <key>Regular Expression</key>
-                        <value>
-                            <name>Regular Expression</name>
-                        </value>
-                    </entry>
-                    <entry>
-                        <key>Replacement Value</key>
-                        <value>
-                            <name>Replacement Value</name>
-                        </value>
-                    </entry>
-                    <entry>
-                        <key>Character Set</key>
-                        <value>
-                            <name>Character Set</name>
-                        </value>
-                    </entry>
-                    <entry>
-                        <key>Maximum Buffer Size</key>
-                        <value>
-                            <name>Maximum Buffer Size</name>
-                        </value>
-                    </entry>
-                    <entry>
-                        <key>Replacement Strategy</key>
-                        <value>
-                            <name>Replacement Strategy</name>
-                        </value>
-                    </entry>
-                    <entry>
-                        <key>Evaluation Mode</key>
-                        <value>
-                            <name>Evaluation Mode</name>
-                        </value>
-                    </entry>
-                    <entry>
-                        <key>Line-by-Line Evaluation Mode</key>
-                        <value>
-                            <name>Line-by-Line Evaluation Mode</name>
-                        </value>
-                    </entry>
-                </descriptors>
-                <executionNode>ALL</executionNode>
-                <lossTolerant>false</lossTolerant>
-                <penaltyDuration>30 sec</penaltyDuration>
-                <properties>
-                    <entry>
-                        <key>Regular Expression</key>
-                        <value>\[(.*?)\]</value>
-                    </entry>
-                    <entry>
-                        <key>Replacement Value</key>
-                        <value>$1</value>
-                    </entry>
-                    <entry>
-                        <key>Character Set</key>
-                        <value>UTF-8</value>
-                    </entry>
-                    <entry>
-                        <key>Maximum Buffer Size</key>
-                        <value>1 MB</value>
-                    </entry>
-                    <entry>
-                        <key>Replacement Strategy</key>
-                        <value>Regex Replace</value>
-                    </entry>
-                    <entry>
-                        <key>Evaluation Mode</key>
-                        <value>Entire text</value>
-                    </entry>
-                    <entry>
-                        <key>Line-by-Line Evaluation Mode</key>
-                        <value>All</value>
-                    </entry>
-                </properties>
-                <runDurationMillis>0</runDurationMillis>
-                <schedulingPeriod>0 sec</schedulingPeriod>
-                <schedulingStrategy>TIMER_DRIVEN</schedulingStrategy>
-                <yieldDuration>1 sec</yieldDuration>
-            </config>
-            <executionNodeRestricted>false</executionNodeRestricted>
-            <name>ReplaceText</name>
-            <relationships>
-                <autoTerminate>false</autoTerminate>
-                <name>failure</name>
-            </relationships>
-            <relationships>
-                <autoTerminate>false</autoTerminate>
-                <name>success</name>
-            </relationships>
-            <state>STOPPED</state>
-            <style/>
-            <type>org.apache.nifi.processors.standard.ReplaceText</type>
-        </processors>
         <processors>
             <id>737b14f9-31aa-3d12-0000-000000000000</id>
             <parentGroupId>c2de80ef-0680-3405-0000-000000000000</parentGroupId>
             <position>
-                <x>512.0</x>
-                <y>32.0</y>
+                <x>160.0</x>
+                <y>240.0</y>
             </position>
             <bundle>
                 <artifact>nifi-standard-nar</artifact>
@@ -397,19 +260,19 @@
                 <autoTerminate>false</autoTerminate>
                 <name>splits</name>
             </relationships>
-            <state>RUNNING</state>
+            <state>STOPPED</state>
             <style/>
             <type>org.apache.nifi.processors.standard.SplitText</type>
         </processors>
         <processors>
-            <id>b4878123-b49b-3312-0000-000000000000</id>
+            <id>76e3cfd2-d061-3115-0000-000000000000</id>
             <parentGroupId>c2de80ef-0680-3405-0000-000000000000</parentGroupId>
             <position>
-                <x>2144.0</x>
-                <y>40.0</y>
+                <x>944.0</x>
+                <y>600.0</y>
             </position>
             <bundle>
-                <artifact>nifi-standard-nar</artifact>
+                <artifact>nifi-kafka-0-9-nar</artifact>
                 <group>org.apache.nifi</group>
                 <version>1.10.0</version>
             </bundle>
@@ -419,9 +282,88 @@
                 <concurrentlySchedulableTaskCount>1</concurrentlySchedulableTaskCount>
                 <descriptors>
                     <entry>
-                        <key>Routing Strategy</key>
+                        <key>bootstrap.servers</key>
                         <value>
-                            <name>Routing Strategy</name>
+                            <name>bootstrap.servers</name>
+                        </value>
+                    </entry>
+                    <entry>
+                        <key>security.protocol</key>
+                        <value>
+                            <name>security.protocol</name>
+                        </value>
+                    </entry>
+                    <entry>
+                        <key>sasl.kerberos.service.name</key>
+                        <value>
+                            <name>sasl.kerberos.service.name</name>
+                        </value>
+                    </entry>
+                    <entry>
+                        <key>ssl.context.service</key>
+                        <value>
+                            <identifiesControllerService>org.apache.nifi.ssl.SSLContextService</identifiesControllerService>
+                            <name>ssl.context.service</name>
+                        </value>
+                    </entry>
+                    <entry>
+                        <key>topic</key>
+                        <value>
+                            <name>topic</name>
+                        </value>
+                    </entry>
+                    <entry>
+                        <key>acks</key>
+                        <value>
+                            <name>acks</name>
+                        </value>
+                    </entry>
+                    <entry>
+                        <key>kafka-key</key>
+                        <value>
+                            <name>kafka-key</name>
+                        </value>
+                    </entry>
+                    <entry>
+                        <key>key-attribute-encoding</key>
+                        <value>
+                            <name>key-attribute-encoding</name>
+                        </value>
+                    </entry>
+                    <entry>
+                        <key>message-demarcator</key>
+                        <value>
+                            <name>message-demarcator</name>
+                        </value>
+                    </entry>
+                    <entry>
+                        <key>max.request.size</key>
+                        <value>
+                            <name>max.request.size</name>
+                        </value>
+                    </entry>
+                    <entry>
+                        <key>ack.wait.time</key>
+                        <value>
+                            <name>ack.wait.time</name>
+                        </value>
+                    </entry>
+                    <entry>
+                        <key>max.block.ms</key>
+                        <value>
+                            <name>max.block.ms</name>
+                        </value>
+                    </entry>
+                    <entry>
+                        <key>partitioner.class</key>
+                        <value>
+                            <name>partitioner.class</name>
+                        </value>
+                    </entry>
+                    <entry>
+                        <key>compression.type</key>
+                        <value>
+                            <name>compression.type</name>
                         </value>
                     </entry>
                 </descriptors>
@@ -430,206 +372,56 @@
                 <penaltyDuration>30 sec</penaltyDuration>
                 <properties>
                     <entry>
-                        <key>Routing Strategy</key>
-                        <value>Route to Property name</value>
-                    </entry>
-                </properties>
-                <runDurationMillis>0</runDurationMillis>
-                <schedulingPeriod>0 sec</schedulingPeriod>
-                <schedulingStrategy>TIMER_DRIVEN</schedulingStrategy>
-                <yieldDuration>1 sec</yieldDuration>
-            </config>
-            <executionNodeRestricted>false</executionNodeRestricted>
-            <name>RouteOnAttribute</name>
-            <relationships>
-                <autoTerminate>false</autoTerminate>
-                <name>unmatched</name>
-            </relationships>
-            <state>STOPPED</state>
-            <style/>
-            <type>org.apache.nifi.processors.standard.RouteOnAttribute</type>
-        </processors>
-        <processors>
-            <id>d7ddc4ea-3276-3eba-0000-000000000000</id>
-            <parentGroupId>c2de80ef-0680-3405-0000-000000000000</parentGroupId>
-            <position>
-                <x>1040.0</x>
-                <y>272.0</y>
-            </position>
-            <bundle>
-                <artifact>nifi-standard-nar</artifact>
-                <group>org.apache.nifi</group>
-                <version>1.10.0</version>
-            </bundle>
-            <config>
-                <bulletinLevel>WARN</bulletinLevel>
-                <comments></comments>
-                <concurrentlySchedulableTaskCount>1</concurrentlySchedulableTaskCount>
-                <descriptors>
-                    <entry>
-                        <key>Character Set</key>
-                        <value>
-                            <name>Character Set</name>
-                        </value>
+                        <key>bootstrap.servers</key>
+                        <value>kafka:9092</value>
                     </entry>
                     <entry>
-                        <key>Maximum Buffer Size</key>
-                        <value>
-                            <name>Maximum Buffer Size</name>
-                        </value>
+                        <key>security.protocol</key>
+                        <value>PLAINTEXT</value>
                     </entry>
                     <entry>
-                        <key>Maximum Capture Group Length</key>
-                        <value>
-                            <name>Maximum Capture Group Length</name>
-                        </value>
+                        <key>sasl.kerberos.service.name</key>
                     </entry>
                     <entry>
-                        <key>Enable Canonical Equivalence</key>
-                        <value>
-                            <name>Enable Canonical Equivalence</name>
-                        </value>
+                        <key>ssl.context.service</key>
                     </entry>
                     <entry>
-                        <key>Enable Case-insensitive Matching</key>
-                        <value>
-                            <name>Enable Case-insensitive Matching</name>
-                        </value>
+                        <key>topic</key>
+                        <value>parse_errors</value>
                     </entry>
                     <entry>
-                        <key>Permit Whitespace and Comments in Pattern</key>
-                        <value>
-                            <name>Permit Whitespace and Comments in Pattern</name>
-                        </value>
+                        <key>acks</key>
+                        <value>0</value>
                     </entry>
                     <entry>
-                        <key>Enable DOTALL Mode</key>
-                        <value>
-                            <name>Enable DOTALL Mode</name>
-                        </value>
+                        <key>kafka-key</key>
                     </entry>
                     <entry>
-                        <key>Enable Literal Parsing of the Pattern</key>
-                        <value>
-                            <name>Enable Literal Parsing of the Pattern</name>
-                        </value>
+                        <key>key-attribute-encoding</key>
+                        <value>utf-8</value>
                     </entry>
                     <entry>
-                        <key>Enable Multiline Mode</key>
-                        <value>
-                            <name>Enable Multiline Mode</name>
-                        </value>
+                        <key>message-demarcator</key>
                     </entry>
                     <entry>
-                        <key>Enable Unicode-aware Case Folding</key>
-                        <value>
-                            <name>Enable Unicode-aware Case Folding</name>
-                        </value>
-                    </entry>
-                    <entry>
-                        <key>Enable Unicode Predefined Character Classes</key>
-                        <value>
-                            <name>Enable Unicode Predefined Character Classes</name>
-                        </value>
-                    </entry>
-                    <entry>
-                        <key>Enable Unix Lines Mode</key>
-                        <value>
-                            <name>Enable Unix Lines Mode</name>
-                        </value>
-                    </entry>
-                    <entry>
-                        <key>Include Capture Group 0</key>
-                        <value>
-                            <name>Include Capture Group 0</name>
-                        </value>
-                    </entry>
-                    <entry>
-                        <key>extract-text-enable-repeating-capture-group</key>
-                        <value>
-                            <name>extract-text-enable-repeating-capture-group</name>
-                        </value>
-                    </entry>
-                    <entry>
-                        <key>entry_timestamp</key>
-                        <value>
-                            <name>entry_timestamp</name>
-                        </value>
-                    </entry>
-                    <entry>
-                        <key>origin</key>
-                        <value>
-                            <name>origin</name>
-                        </value>
-                    </entry>
-                </descriptors>
-                <executionNode>ALL</executionNode>
-                <lossTolerant>false</lossTolerant>
-                <penaltyDuration>30 sec</penaltyDuration>
-                <properties>
-                    <entry>
-                        <key>Character Set</key>
-                        <value>UTF-8</value>
-                    </entry>
-                    <entry>
-                        <key>Maximum Buffer Size</key>
+                        <key>max.request.size</key>
                         <value>1 MB</value>
                     </entry>
                     <entry>
-                        <key>Maximum Capture Group Length</key>
-                        <value>1024</value>
+                        <key>ack.wait.time</key>
+                        <value>5 secs</value>
                     </entry>
                     <entry>
-                        <key>Enable Canonical Equivalence</key>
-                        <value>false</value>
+                        <key>max.block.ms</key>
+                        <value>5 sec</value>
                     </entry>
                     <entry>
-                        <key>Enable Case-insensitive Matching</key>
-                        <value>false</value>
+                        <key>partitioner.class</key>
+                        <value>org.apache.kafka.clients.producer.internals.DefaultPartitioner</value>
                     </entry>
                     <entry>
-                        <key>Permit Whitespace and Comments in Pattern</key>
-                        <value>false</value>
-                    </entry>
-                    <entry>
-                        <key>Enable DOTALL Mode</key>
-                        <value>false</value>
-                    </entry>
-                    <entry>
-                        <key>Enable Literal Parsing of the Pattern</key>
-                        <value>false</value>
-                    </entry>
-                    <entry>
-                        <key>Enable Multiline Mode</key>
-                        <value>false</value>
-                    </entry>
-                    <entry>
-                        <key>Enable Unicode-aware Case Folding</key>
-                        <value>false</value>
-                    </entry>
-                    <entry>
-                        <key>Enable Unicode Predefined Character Classes</key>
-                        <value>false</value>
-                    </entry>
-                    <entry>
-                        <key>Enable Unix Lines Mode</key>
-                        <value>false</value>
-                    </entry>
-                    <entry>
-                        <key>Include Capture Group 0</key>
-                        <value>true</value>
-                    </entry>
-                    <entry>
-                        <key>extract-text-enable-repeating-capture-group</key>
-                        <value>false</value>
-                    </entry>
-                    <entry>
-                        <key>entry_timestamp</key>
-                        <value>^.{0,23}</value>
-                    </entry>
-                    <entry>
-                        <key>origin</key>
-                        <value> - (.*?) - </value>
+                        <key>compression.type</key>
+                        <value>none</value>
                     </entry>
                 </properties>
                 <runDurationMillis>0</runDurationMillis>
@@ -638,7 +430,103 @@
                 <yieldDuration>1 sec</yieldDuration>
             </config>
             <executionNodeRestricted>false</executionNodeRestricted>
-            <name>ExtractText</name>
+            <name>PublishKafka</name>
+            <relationships>
+                <autoTerminate>true</autoTerminate>
+                <name>failure</name>
+            </relationships>
+            <relationships>
+                <autoTerminate>true</autoTerminate>
+                <name>success</name>
+            </relationships>
+            <state>STOPPED</state>
+            <style/>
+            <type>org.apache.nifi.processors.kafka.pubsub.PublishKafka</type>
+        </processors>
+        <processors>
+            <id>ced1b978-29a2-3659-0000-000000000000</id>
+            <parentGroupId>c2de80ef-0680-3405-0000-000000000000</parentGroupId>
+            <position>
+                <x>160.0</x>
+                <y>512.0</y>
+            </position>
+            <bundle>
+                <artifact>nifi-standard-nar</artifact>
+                <group>org.apache.nifi</group>
+                <version>1.10.0</version>
+            </bundle>
+            <config>
+                <bulletinLevel>WARN</bulletinLevel>
+                <comments></comments>
+                <concurrentlySchedulableTaskCount>1</concurrentlySchedulableTaskCount>
+                <descriptors>
+                    <entry>
+                        <key>Destination</key>
+                        <value>
+                            <name>Destination</name>
+                        </value>
+                    </entry>
+                    <entry>
+                        <key>Return Type</key>
+                        <value>
+                            <name>Return Type</name>
+                        </value>
+                    </entry>
+                    <entry>
+                        <key>Path Not Found Behavior</key>
+                        <value>
+                            <name>Path Not Found Behavior</name>
+                        </value>
+                    </entry>
+                    <entry>
+                        <key>Null Value Representation</key>
+                        <value>
+                            <name>Null Value Representation</name>
+                        </value>
+                    </entry>
+                    <entry>
+                        <key>event_timestamp</key>
+                        <value>
+                            <name>event_timestamp</name>
+                        </value>
+                    </entry>
+                </descriptors>
+                <executionNode>ALL</executionNode>
+                <lossTolerant>false</lossTolerant>
+                <penaltyDuration>30 sec</penaltyDuration>
+                <properties>
+                    <entry>
+                        <key>Destination</key>
+                        <value>flowfile-attribute</value>
+                    </entry>
+                    <entry>
+                        <key>Return Type</key>
+                        <value>auto-detect</value>
+                    </entry>
+                    <entry>
+                        <key>Path Not Found Behavior</key>
+                        <value>ignore</value>
+                    </entry>
+                    <entry>
+                        <key>Null Value Representation</key>
+                        <value>empty string</value>
+                    </entry>
+                    <entry>
+                        <key>event_timestamp</key>
+                        <value>$.timestamp</value>
+                    </entry>
+                </properties>
+                <runDurationMillis>0</runDurationMillis>
+                <schedulingPeriod>0 sec</schedulingPeriod>
+                <schedulingStrategy>TIMER_DRIVEN</schedulingStrategy>
+                <yieldDuration>1 sec</yieldDuration>
+            </config>
+            <executionNodeRestricted>false</executionNodeRestricted>
+            <name>EvaluateJsonPath</name>
+            <relationships>
+                <autoTerminate>false</autoTerminate>
+                <name>failure</name>
+            </relationships>
             <relationships>
                 <autoTerminate>false</autoTerminate>
                 <name>matched</name>
@@ -649,14 +537,14 @@
             </relationships>
             <state>STOPPED</state>
             <style/>
-            <type>org.apache.nifi.processors.standard.ExtractText</type>
+            <type>org.apache.nifi.processors.standard.EvaluateJsonPath</type>
         </processors>
         <processors>
             <id>eab08cc9-e9fd-3dc3-0000-000000000000</id>
             <parentGroupId>c2de80ef-0680-3405-0000-000000000000</parentGroupId>
             <position>
-                <x>0.0</x>
-                <y>248.0</y>
+                <x>160.0</x>
+                <y>0.0</y>
             </position>
             <bundle>
                 <artifact>nifi-standard-nar</artifact>
@@ -775,10 +663,189 @@
                 <autoTerminate>false</autoTerminate>
                 <name>success</name>
             </relationships>
-            <state>RUNNING</state>
+            <state>STOPPED</state>
             <style/>
             <type>org.apache.nifi.processors.standard.TailFile</type>
         </processors>
+        <processors>
+            <id>f1c1b8d3-05fe-3191-0000-000000000000</id>
+            <parentGroupId>c2de80ef-0680-3405-0000-000000000000</parentGroupId>
+            <position>
+                <x>944.0</x>
+                <y>432.0</y>
+            </position>
+            <bundle>
+                <artifact>nifi-kafka-0-9-nar</artifact>
+                <group>org.apache.nifi</group>
+                <version>1.10.0</version>
+            </bundle>
+            <config>
+                <bulletinLevel>WARN</bulletinLevel>
+                <comments></comments>
+                <concurrentlySchedulableTaskCount>1</concurrentlySchedulableTaskCount>
+                <descriptors>
+                    <entry>
+                        <key>bootstrap.servers</key>
+                        <value>
+                            <name>bootstrap.servers</name>
+                        </value>
+                    </entry>
+                    <entry>
+                        <key>security.protocol</key>
+                        <value>
+                            <name>security.protocol</name>
+                        </value>
+                    </entry>
+                    <entry>
+                        <key>sasl.kerberos.service.name</key>
+                        <value>
+                            <name>sasl.kerberos.service.name</name>
+                        </value>
+                    </entry>
+                    <entry>
+                        <key>ssl.context.service</key>
+                        <value>
+                            <identifiesControllerService>org.apache.nifi.ssl.SSLContextService</identifiesControllerService>
+                            <name>ssl.context.service</name>
+                        </value>
+                    </entry>
+                    <entry>
+                        <key>topic</key>
+                        <value>
+                            <name>topic</name>
+                        </value>
+                    </entry>
+                    <entry>
+                        <key>acks</key>
+                        <value>
+                            <name>acks</name>
+                        </value>
+                    </entry>
+                    <entry>
+                        <key>kafka-key</key>
+                        <value>
+                            <name>kafka-key</name>
+                        </value>
+                    </entry>
+                    <entry>
+                        <key>key-attribute-encoding</key>
+                        <value>
+                            <name>key-attribute-encoding</name>
+                        </value>
+                    </entry>
+                    <entry>
+                        <key>message-demarcator</key>
+                        <value>
+                            <name>message-demarcator</name>
+                        </value>
+                    </entry>
+                    <entry>
+                        <key>max.request.size</key>
+                        <value>
+                            <name>max.request.size</name>
+                        </value>
+                    </entry>
+                    <entry>
+                        <key>ack.wait.time</key>
+                        <value>
+                            <name>ack.wait.time</name>
+                        </value>
+                    </entry>
+                    <entry>
+                        <key>max.block.ms</key>
+                        <value>
+                            <name>max.block.ms</name>
+                        </value>
+                    </entry>
+                    <entry>
+                        <key>partitioner.class</key>
+                        <value>
+                            <name>partitioner.class</name>
+                        </value>
+                    </entry>
+                    <entry>
+                        <key>compression.type</key>
+                        <value>
+                            <name>compression.type</name>
+                        </value>
+                    </entry>
+                </descriptors>
+                <executionNode>ALL</executionNode>
+                <lossTolerant>false</lossTolerant>
+                <penaltyDuration>30 sec</penaltyDuration>
+                <properties>
+                    <entry>
+                        <key>bootstrap.servers</key>
+                        <value>kafka:9092</value>
+                    </entry>
+                    <entry>
+                        <key>security.protocol</key>
+                        <value>PLAINTEXT</value>
+                    </entry>
+                    <entry>
+                        <key>sasl.kerberos.service.name</key>
+                    </entry>
+                    <entry>
+                        <key>ssl.context.service</key>
+                    </entry>
+                    <entry>
+                        <key>topic</key>
+                        <value>incoming</value>
+                    </entry>
+                    <entry>
+                        <key>acks</key>
+                        <value>0</value>
+                    </entry>
+                    <entry>
+                        <key>kafka-key</key>
+                    </entry>
+                    <entry>
+                        <key>key-attribute-encoding</key>
+                        <value>utf-8</value>
+                    </entry>
+                    <entry>
+                        <key>message-demarcator</key>
+                    </entry>
+                    <entry>
+                        <key>max.request.size</key>
+                        <value>1 MB</value>
+                    </entry>
+                    <entry>
+                        <key>ack.wait.time</key>
+                        <value>5 secs</value>
+                    </entry>
+                    <entry>
+                        <key>max.block.ms</key>
+                        <value>5 sec</value>
+                    </entry>
+                    <entry>
+                        <key>partitioner.class</key>
+                        <value>org.apache.kafka.clients.producer.internals.DefaultPartitioner</value>
+                    </entry>
+                    <entry>
+                        <key>compression.type</key>
+                        <value>none</value>
+                    </entry>
+                </properties>
+                <runDurationMillis>0</runDurationMillis>
+                <schedulingPeriod>0 sec</schedulingPeriod>
+                <schedulingStrategy>TIMER_DRIVEN</schedulingStrategy>
+                <yieldDuration>1 sec</yieldDuration>
+            </config>
+            <executionNodeRestricted>false</executionNodeRestricted>
+            <name>PublishKafka</name>
+            <relationships>
+                <autoTerminate>true</autoTerminate>
+                <name>failure</name>
+            </relationships>
+            <relationships>
+                <autoTerminate>true</autoTerminate>
+                <name>success</name>
+            </relationships>
+            <state>STOPPED</state>
+            <style/>
+            <type>org.apache.nifi.processors.kafka.pubsub.PublishKafka</type>
+        </processors>
     </snippet>
-    <timestamp>01/25/2020 13:44:35 UTC</timestamp>
+    <timestamp>01/26/2020 13:38:04 UTC</timestamp>
 </template>
