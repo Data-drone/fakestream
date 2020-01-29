@@ -65,7 +65,7 @@ if __name__ == '__main__':
         path = os.path.join(ROOT_DIR, uuid + '.xml')
         xmlfile = open(path, "w")
         xmlfile.write(dat)
-
+            
         for i, img in enumerate(images):
             name = os.path.join(ROOT_DIR, '{0}_{1}.jpg'.format(uuid, i))
             Image.fromarray(img).convert("RGB").save(name, subsampling=0, quality=100)

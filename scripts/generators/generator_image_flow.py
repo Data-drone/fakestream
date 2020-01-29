@@ -14,7 +14,7 @@ class ImageFlow(DataGenerator):
         
     def __init__(self, images_per_emit: int=1, image_size: List[int]=[1290, 720]):
             
-            self.images_per_emit = 1
+            self.images_per_emit = images_per_emit
             self.image_size = image_size
             self.fake_gen = Faker()
         
