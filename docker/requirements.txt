@@ -1,3 +1,4 @@
 Faker==3.0.0
 numpy==1.18.1
 nipyapi==0.14.0
+dict2xml==1.6.1

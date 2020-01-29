@@ -45,8 +45,11 @@ def make_parser():
 
 
 if __name__ == '__main__':
+
+    parser = make_parser()
+    args = parser.parse_args()
     
-    new_generator = BankGenerator(tuples_per_emit=2)
+    new_generator = BankGenerator(tuples_per_emit=args.tuples_per_emit)
     stop = False
 
     while(stop!=True):
