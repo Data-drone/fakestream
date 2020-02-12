@@ -27,3 +27,4 @@ docker-compose script sets up four nodes with:
 
  - Utilise NiPy API to load templates
  - Utilise NiPy API to connect registry
+ - Add flink algos and examples
