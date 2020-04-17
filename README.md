@@ -8,11 +8,22 @@ Ideally fake data should have some resemblance to real data. This repo leverages
 
 Start the container with:
 
-```
+```Bash
 docker run --name fakestream \
     -p 8080:8080 \
     -d \
     fakestream:latest
+```
+
+Dev docker:
+
+```Bash
+docker run --name data_faker_dev \
+    -p 10000:8888 \
+    -d -lt \
+    -v /home/brian/Workspace/data_faker:/home/jovyan/work
+    jupyter/scipy-notebook
+
 ```
 
 ## Examples
