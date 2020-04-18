@@ -24,6 +24,16 @@ def make_parser():
 
 def main(args):
 
+    """
+
+    We should make a fake client list then do transactions from clients only?
+      - make a fake client list
+      - make fake cards and assign them to clients 1+ cards per client?
+
+      - make transactions!
+
+    """
+
     generator_module = BankGenerator(tuples_per_emit = args.tuples_per_emit)
     
     print(json.dumps(generator_module.emit()))
