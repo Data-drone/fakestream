@@ -14,7 +14,7 @@ class SensorGenerator(DataGenerator):
 
     """
 
-    def __init__(self, batch):
+    def __init__(self, batch: int=1):
 
         self.batch = batch
         self.origin = np.zeros((1, 1))
@@ -29,8 +29,10 @@ class SensorGenerator(DataGenerator):
             self.origin = np.zeros((1,1)) + path[-1:]
 
             path = path[1:]
+            
             output = []
             for i in range(len(path)):
-                output.append([datetime.utcnow(), path[i]])  
+                print(path[i])
+                output.append([datetime.datetime.utcnow(), path[i][0]])  
 
             yield output
