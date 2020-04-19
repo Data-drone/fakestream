@@ -1,1 +1,2 @@
 from .generator_bank import BankGenerator
+from .generator_sensorstream import SensorGenerator

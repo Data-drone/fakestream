@@ -4,7 +4,12 @@ import datetime
 import json
 from confluent_kafka import Producer
 import socket
+from threading import Thread
 
+conf = {'bootstrap.servers': "kafka:9092",
+        'queue.buffering.max.messages': 500000, # is this too small?
+        'queue.buffering.max.ms': 60000, # is this too long?
+        'client.id': socket.gethostname()}
 
 
 def make_parser():
@@ -17,29 +22,58 @@ def make_parser():
     parser = ArgumentParser(description="Create dummy sensor stream esque data")
     parser.add_argument('--tuples-per-emit', '-t', type=int, default=1,
                             help='number of tuples to emit at once')
+    parser.add_argument('--sensors', '-s', type=int, default=1,
+                            help='number of sensors to generate')
 
     return parser
 
+def delivery_report(err, msg):
+    """ Called once for each message produced to indicate delivery result.
+        Triggered by poll() or flush(). """
+    if err is not None:
+        print('Message delivery failed: {}'.format(err))
+    else:
+        print('Message delivered to {} [{}]'.format(msg.topic(), msg.partition()))
+
+
 def myconverter(o):
+    """
+
+    json converter to make sure the date time is parsed properly
+
+    """
     if isinstance(o, datetime.datetime):
         return o.__str__()
 
-def main(args):
 
+def generate_sensor(sensor_name = 'sensor1', 
+                    tuples = 1):
 
-    conf = {'bootstrap.servers': "kafka:9092",
-            'client.id': socket.gethostname()}
-
+    gen = SensorGenerator(batch = tuples)
     producer = Producer(conf)
 
-    generator_module = SensorGenerator(batch = args.tuples_per_emit)
-
     while True:
-        #print()
-        for data in generator_module.emit():
-            producer.produce('sensors_raw', json.dumps(data,default = myconverter) )
-        #producer.produce('sensors_raw', key="key", 
-        #                value=json.dumps(next(generator_module.emit()), default = myconverter))
+        for data in gen.emit():
+            producer.produce('sensors_raw', key=sensor_name, 
+                                    value=json.dumps(data,default = myconverter), 
+                                    callback = delivery_report)
+
+            # clean up the queue to avert the buffer crash
+            producer.poll(0)
+
+
+
+def main(args):
+
+    # rig it up for multi-sensors?
+
+    threads = []
+    for i in range(args.sensors):
+        name = 'sensor_{0}'.format(str(i))
+        process = Thread(target=generate_sensor, args=[name, args.tuples_per_emit])
+        process.start()
+
+        threads.append(process)
 
 
 
