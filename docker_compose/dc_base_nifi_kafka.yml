@@ -1,4 +1,5 @@
 # quick demo script with nifi and kafka with a registry too
+# run from top level of project
 
 version: "3.7"
 services:
@@ -28,9 +29,21 @@ services:
             KAFKA_LISTENERS: INSIDE://:9092,OUTSIDE://:9094
             KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INSIDE:PLAINTEXT,OUTSIDE:PLAINTEXT
             KAFKA_INTER_BROKER_LISTENER_NAME: INSIDE
-            KAFKA_CREATE_TOPICS: "input:1:1, output:1:1, sensors_raw:1:1"
+            KAFKA_CREATE_TOPICS: "input:1:1, output:1:1, sensors_raw:1:1, sensor_data_count:1:1"
             KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
         ports:
             - 9094:9094
-    kafka-client:
-        image:
+    kafka-app:
+        build:             
+            context: ..
+            dockerfile: ./docker/kafka-client/Dockerfile
+        command: ["java", "-jar", "brian.jar"]
+        environment:
+            KAFKA_ADVERTISED_LISTENERS: INSIDE://:9092,OUTSIDE://:9094
+            KAFKA_LISTENERS: INSIDE://:9092,OUTSIDE://:9094
+            KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INSIDE:PLAINTEXT,OUTSIDE:PLAINTEXT
+            KAFKA_INTER_BROKER_LISTENER_NAME: INSIDE
+            KAFKA_CREATE_TOPICS: "input:1:1, output:1:1, sensors_raw:1:1, sensor_data_count:1:1"
+            KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+        depends_on:
+            - kafka

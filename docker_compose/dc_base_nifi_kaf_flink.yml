@@ -4,7 +4,7 @@ version: "3.7"
 services:
     node:
         build:
-            context: ../docker
+            context: ../docker/fakestream
             dockerfile: Dockerfile
         image: fakestream:latest
         volumes:
