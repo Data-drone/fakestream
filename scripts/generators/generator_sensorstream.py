@@ -32,7 +32,8 @@ class SensorGenerator(DataGenerator):
             
             output = []
             for i in range(len(path)):
-                print(path[i])
+                #print(path[i][0])
+                #print(type(path[i][0]))
                 output.append([datetime.datetime.utcnow(), path[i][0]])  
 
             yield output

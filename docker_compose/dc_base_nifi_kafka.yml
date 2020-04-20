@@ -4,7 +4,7 @@ version: "3.7"
 services:
     node:
         build:
-            context: ../docker
+            context: ../docker/fakestream
             dockerfile: Dockerfile
         image: fakestream:latest
         volumes:
@@ -20,7 +20,9 @@ services:
     zookeeper:
         image: wurstmeister/zookeeper:3.4.6
     kafka:
-        image: wurstmeister/kafka:2.12-2.2.1
+        image: wurstmeister/kafka:2.12-2.4.1
+        volumes:
+            - "../kafka_apps:/opt/kafka-apps"
         environment:
             KAFKA_ADVERTISED_LISTENERS: INSIDE://:9092,OUTSIDE://:9094
             KAFKA_LISTENERS: INSIDE://:9092,OUTSIDE://:9094
@@ -30,3 +32,5 @@ services:
             KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
         ports:
             - 9094:9094
+    kafka-client:
+        image:
