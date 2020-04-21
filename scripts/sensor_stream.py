@@ -6,11 +6,6 @@ from confluent_kafka import Producer
 import socket
 from threading import Thread
 
-conf = {'bootstrap.servers': "kafka:9092",
-        'queue.buffering.max.messages': 500000, # is this too small?
-        'queue.buffering.max.ms': 60000, # is this too long?
-        'client.id': socket.gethostname()}
-
 
 def make_parser():
     """
@@ -46,11 +41,11 @@ def myconverter(o):
         return o.__str__()
 
 
-def generate_sensor(sensor_name = 'sensor1', 
-                    tuples = 1):
+def generate_sensor(sensor_name, 
+                    tuples, config):
 
     gen = SensorGenerator(batch = tuples)
-    producer = Producer(conf)
+    producer = Producer(config)
 
     while True:
         for data in gen.emit():
@@ -65,12 +60,21 @@ def generate_sensor(sensor_name = 'sensor1',
 
 def main(args):
 
+    conf = {'bootstrap.servers': "kafka:9092",
+        'queue.buffering.max.messages': 50000, # is this too small?
+        'queue.buffering.max.ms': 60000, # is this too long?
+        'client.id': socket.gethostname()}
+
     # rig it up for multi-sensors?
 
+    print("starting sensor streamer")
+    print("Starting {0} sensors".format(args.sensors))
     threads = []
     for i in range(args.sensors):
         name = 'sensor_{0}'.format(str(i))
-        process = Thread(target=generate_sensor, args=[name, args.tuples_per_emit])
+        print("starting: {0}".format(name))
+
+        process = Thread(target=generate_sensor, args=[name, args.tuples_per_emit, conf])
         process.start()
 
         threads.append(process)
