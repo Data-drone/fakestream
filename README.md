@@ -21,7 +21,7 @@ Dev docker:
 docker run --name data_faker_dev \
     -p 10000:8888 \
     -d -lt \
-    -v /home/brian/Workspace/data_faker:/home/jovyan/work
+    -v /home/brian/Workspace/data_faker:/home/jovyan/work \
     jupyter/scipy-notebook
 
 ```
