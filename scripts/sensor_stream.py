@@ -49,7 +49,7 @@ def generate_sensor(sensor_name,
 
     while True:
         for data in gen.emit():
-            producer.produce('sensors_raw', key=sensor_name, 
+            producer.produce('sensors-raw', key=sensor_name, 
                                     value=json.dumps(data,default = myconverter), 
                                     callback = delivery_report)
 
