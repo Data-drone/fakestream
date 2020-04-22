@@ -16,5 +16,4 @@ RUN mvn clean package assembly:single
 
 FROM openjdk:8-jre
 WORKDIR /home
-COPY --from=builder /opt/sensor_stream/target/sensor_count-1.0-SNAPSHOT.jar /home/sensor_count.jar
-COPY --from=builder /opt/sensor_stream/target/sensor_count-1.0-SNAPSHOT-*.jar /home/sensor_count_deps.jar
+COPY --from=builder /opt/sensor_stream/target/sensor_count*.jar /home/
