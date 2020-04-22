@@ -8,7 +8,7 @@ FROM maven:3.6-jdk-8-slim AS builder
 # we have ./kafka_apps because we run docker compose from project level
 COPY ./kafka_apps/sensor_stream/sensor_count /opt/sensor_stream
 WORKDIR /opt/sensor_stream
-RUN mvn clean install package
+RUN mvn clean package assembly:single
 
 #################################
 ####### Build Maven 
@@ -16,4 +16,5 @@ RUN mvn clean install package
 
 FROM openjdk:8-jre
 WORKDIR /home
-COPY --from=builder /opt/sensor_stream/target/sensor_count-*.jar /home/sensor_count.jar
+COPY --from=builder /opt/sensor_stream/target/sensor_count-1.0-SNAPSHOT.jar /home/sensor_count.jar
+COPY --from=builder /opt/sensor_stream/target/sensor_count-1.0-SNAPSHOT-*.jar /home/sensor_count_deps.jar
