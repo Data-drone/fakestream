@@ -49,12 +49,15 @@ def generate_sensor(sensor_name,
 
     while True:
         for data in gen.emit():
-            producer.produce('sensors-raw', key=sensor_name, 
-                                    value=json.dumps(data,default = myconverter), 
-                                    callback = delivery_report)
+            for element in data:
+                data_dict = {'timestamp': element[0], 'value': element[1]}
 
-            # clean up the queue to avert the buffer crash
-            producer.poll(0)
+                producer.produce('sensors-raw', key=sensor_name, 
+                                        value=json.dumps(data_dict,default = myconverter), 
+                                        callback = delivery_report)
+
+                # clean up the queue to avert the buffer crash
+                producer.poll(0)
 
 
 

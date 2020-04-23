@@ -34,6 +34,7 @@ class SensorGenerator(DataGenerator):
             for i in range(len(path)):
                 #print(path[i][0])
                 #print(type(path[i][0]))
+                # lets dump to json?
                 output.append([datetime.datetime.utcnow(), path[i][0]])  
 
             yield output
