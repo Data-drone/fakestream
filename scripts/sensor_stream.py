@@ -51,21 +51,24 @@ def generate_sensor(sensor_name,
         for data in gen.emit():
             for element in data:
                 data_dict = {'timestamp': element[0], 'value': element[1]}
+                try:
+                    producer.produce('sensors-raw', key=sensor_name, 
+                                            value=json.dumps(data_dict,default = myconverter))
 
-                producer.produce('sensors-raw', key=sensor_name, 
-                                        value=json.dumps(data_dict,default = myconverter), 
-                                        callback = delivery_report)
-
-                # clean up the queue to avert the buffer crash
-                producer.poll(0)
-
+                    # clean up the queue to avert the buffer crash
+                    producer.poll(0)
+                    break
+                except BufferError as e:
+                    print(e)
+                    producer.poll(1)
 
 
 def main(args):
 
     conf = {'bootstrap.servers': "kafka:9092",
-        'queue.buffering.max.messages': 50000, # is this too small?
-        'queue.buffering.max.ms': 60000, # is this too long?
+        'batch.num.messages': 1000,
+        'queue.buffering.max.messages': 100000, # is this too small?
+        'queue.buffering.max.ms': 70000, # is this too long?
         'client.id': socket.gethostname()}
 
     # rig it up for multi-sensors?
