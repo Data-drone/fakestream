@@ -10,16 +10,23 @@ import org.apache.kafka.streams.kstream.KStream;
 import org.apache.kafka.streams.kstream.KTable;
 import org.apache.kafka.streams.kstream.Produced;
 
+import com.google.gson.Gson;
+
 import java.util.Properties;
 
 /*h
  * Hello world!
  *
  */
+
+
+
 public class SensorStreamCount 
 {
     static final String inputTopic = "sensors-raw";
     static final String outputTopic = "sensors-data-count";
+
+    static Gson gson = new Gson();
 
     public static void main( String[] args )
     {
@@ -56,7 +63,7 @@ public class SensorStreamCount
         streamsConfiguration.put(StreamsConfig.DEFAULT_KEY_SERDE_CLASS_CONFIG, Serdes.String().getClass().getName());
 
         // TODO the data comes in as [string_timestamp, value]
-        streamsConfiguration.put(StreamsConfig.DEFAULT_VALUE_SERDE_CLASS_CONFIG, Serdes.Float().getClass().getName());
+        streamsConfiguration.put(StreamsConfig.DEFAULT_VALUE_SERDE_CLASS_CONFIG, Serdes.String().getClass().getName());
 
 
         return streamsConfiguration;
@@ -64,8 +71,14 @@ public class SensorStreamCount
 
     static void createSensorCountStream(final StreamsBuilder builder) {
 
-        final KStream<String, Float> valueLines = builder.stream(inputTopic);
+        final KStream<String, String> valueLines = builder.stream(inputTopic);
 
+        // need to see if we can do something with this?
+        //KStream<String, Map> sensorValues = valueLines.mapValues( (v -> gson.fromJson(v, Map.class)));
+
+        // need function to parse the string
+        // format is json
+        // this will be fine with the new json format
         final KTable<String, Long> valueCounts = valueLines
                     .groupByKey()
                     .count();
