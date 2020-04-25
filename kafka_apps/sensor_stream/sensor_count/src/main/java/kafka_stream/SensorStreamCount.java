@@ -82,6 +82,8 @@ public class SensorStreamCount
         // do we need to have a serdes in the groupby?
         final KTable<String, Long> valueCounts = valueLines
                     .groupByKey()
+                    // maybe we need to look at this?
+                    //TODO switch for aggregate?
                     .count();
             
         valueCounts.toStream().to(outputTopic, Produced.with(Serdes.String(), Serdes.Long()));
