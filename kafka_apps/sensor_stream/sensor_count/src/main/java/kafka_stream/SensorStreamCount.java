@@ -78,7 +78,8 @@ public class SensorStreamCount
 
         // need function to parse the string
         // format is json
-        // this will be fine with the new json format
+        // this doesn't seem to be doing what I want?
+        // do we need to have a serdes in the groupby?
         final KTable<String, Long> valueCounts = valueLines
                     .groupByKey()
                     .count();
