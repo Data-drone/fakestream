@@ -74,7 +74,7 @@ public class SensorStreamCount
         final KStream<String, String> valueLines = builder.stream(inputTopic);
 
         // need to see if we can do something with this?
-        //KStream<String, Map> sensorValues = valueLines.mapValues( (v -> gson.fromJson(v, Map.class)));
+        //final KStream<String, Map> sensorValues = valueLines.mapValues( (v -> gson.fromJson(v, Map.class)));
 
         // need function to parse the string
         // format is json
@@ -82,8 +82,6 @@ public class SensorStreamCount
         // do we need to have a serdes in the groupby?
         final KTable<String, Long> valueCounts = valueLines
                     .groupByKey()
-                    // maybe we need to look at this?
-                    //TODO switch for aggregate?
                     .count();
             
         valueCounts.toStream().to(outputTopic, Produced.with(Serdes.String(), Serdes.Long()));

@@ -33,6 +33,10 @@ services:
             KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
         ports:
             - 9094:9094
+    kafka-dev:
+        image: maven:3.6-jdk-8-slim
+        volumes:
+            - "../kafka_apps:/opt/kafka-apps"
     kafka-app:
         build:             
             context: ..
