@@ -1,4 +1,4 @@
-package kafka_stream;
+package model;
 
 /*
 * Data holder for sensor values

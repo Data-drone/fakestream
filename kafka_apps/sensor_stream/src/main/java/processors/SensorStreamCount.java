@@ -1,4 +1,4 @@
-package kafka_stream;
+package processors;
 
 import org.apache.kafka.common.serialization.Serdes;
 
