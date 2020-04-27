@@ -1,4 +1,4 @@
-package util;
+package serde;
 
 import model.SensorVal;
 
