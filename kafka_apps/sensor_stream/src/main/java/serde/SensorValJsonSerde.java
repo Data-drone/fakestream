@@ -1,5 +1,8 @@
 package serde;
 
+import java.nio.charset.StandardCharsets;
+import java.util.Map;
+
 import model.SensorVal;
 
 import org.apache.kafka.common.serialization.Deserializer;
@@ -23,13 +26,8 @@ public class SensorValJsonSerde extends Serdes.WrapperSerde<SensorVal> {
 
             @Override
             public byte[] serialize(String topic, SensorVal data) {
-                return gson.toJson(data);
+                return gson.toJson(data).getBytes(StandardCharsets.UTF_8);
             } 
-
-            @Override
-            public void configure(Map<String, ?> configs, boolean isKey) {
-
-            }
 
             @Override
             public void close() {

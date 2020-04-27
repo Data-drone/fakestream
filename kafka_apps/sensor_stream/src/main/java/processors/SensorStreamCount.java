@@ -9,16 +9,14 @@ import org.apache.kafka.streams.StreamsConfig;
 import org.apache.kafka.streams.kstream.KStream;
 import org.apache.kafka.streams.kstream.KTable;
 import org.apache.kafka.streams.kstream.Produced;
+import org.apache.kafka.streams.kstream.Consumed;
 
 import com.google.gson.Gson;
 
 import java.util.Properties;
 
-/*h
- * Hello world!
- *
- */
-
+import serde.SensorValJsonSerde;
+import model.SensorVal;
 
 
 public class SensorStreamCount 
@@ -61,8 +59,6 @@ public class SensorStreamCount
         streamsConfiguration.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
 
         streamsConfiguration.put(StreamsConfig.DEFAULT_KEY_SERDE_CLASS_CONFIG, Serdes.String().getClass().getName());
-
-        // TODO the data comes in as [string_timestamp, value]
         streamsConfiguration.put(StreamsConfig.DEFAULT_VALUE_SERDE_CLASS_CONFIG, Serdes.String().getClass().getName());
 
 
@@ -71,7 +67,8 @@ public class SensorStreamCount
 
     static void createSensorCountStream(final StreamsBuilder builder) {
 
-        final KStream<String, String> valueLines = builder.stream(inputTopic);
+        final KStream<String, SensorVal> valueLines = builder
+                    .stream(inputTopic, Consumed.with(Serdes.String(), new SensorValJsonSerde()));
 
         // need to see if we can do something with this?
         //final KStream<String, Map> sensorValues = valueLines.mapValues( (v -> gson.fromJson(v, Map.class)));

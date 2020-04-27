@@ -1,4 +1,4 @@
-package kafka_stream;
+
 
 import static org.junit.Assert.assertTrue;
 
