@@ -9,10 +9,13 @@ import org.apache.kafka.streams.StreamsConfig;
 import org.apache.kafka.streams.kstream.KStream;
 import org.apache.kafka.streams.kstream.KTable;
 import org.apache.kafka.streams.kstream.Produced;
+import org.apache.kafka.streams.kstream.TimeWindows;
+import org.apache.kafka.streams.kstream.internals.TimeWindow;
 import org.apache.kafka.streams.kstream.Consumed;
 
 import com.google.gson.Gson;
 
+import java.time.Duration;
 import java.util.Properties;
 
 import serde.SensorValJsonSerde;
@@ -77,8 +80,10 @@ public class SensorStreamCount
         // format is json
         // this doesn't seem to be doing what I want?
         // do we need to have a serdes in the groupby?
-        final KTable<String, Long> valueCounts = valueLines
+        // we need to change the table def?
+        final KTable<Windowed<String>, Long> valueCounts = valueLines
                     .groupByKey()
+                    .windowedBy(TimeWindows.of(Duration.ofMinutes(1)))
                     .count();
             
         valueCounts.toStream().to(outputTopic, Produced.with(Serdes.String(), Serdes.Long()));
