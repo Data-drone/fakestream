@@ -14,6 +14,16 @@ public class SensorVal {
             this.reading = source_reading;
     }
 
+
+    @Override
+    public String toString() {
+        
+        String stamp = this.datetime; + " " + this.reading;
+        
+        return stamp;
+    }
+
+
     public void setDatetime(String stamp){
         this.datetime = stamp;
     }
