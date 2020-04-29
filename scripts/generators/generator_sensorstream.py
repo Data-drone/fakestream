@@ -3,6 +3,7 @@ import datetime
 import json
 from argparse import ArgumentParser
 import numpy as np
+import time
 
 # industrial sensor data generator
 
@@ -14,11 +15,12 @@ class SensorGenerator(DataGenerator):
 
     """
 
-    def __init__(self, batch: int=1):
+    def __init__(self, batch: int=1, wait: int=1):
 
         self.batch = batch
         self.origin = np.zeros((1, 1))
         self.step_set = [-1, 0, 1]
+        self.wait = wait
 
     def emit(self) -> list:
 
@@ -36,5 +38,7 @@ class SensorGenerator(DataGenerator):
                 #print(type(path[i][0]))
                 # lets dump to json?
                 output.append([datetime.datetime.utcnow(), path[i][0]])  
+
+                time.sleep(self.wait)
 
             yield output
