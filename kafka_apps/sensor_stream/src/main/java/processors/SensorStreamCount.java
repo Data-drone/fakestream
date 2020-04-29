@@ -13,6 +13,8 @@ import org.apache.kafka.streams.kstream.TimeWindows;
 import org.apache.kafka.streams.kstream.internals.TimeWindow;
 import org.apache.kafka.streams.kstream.Consumed;
 
+import org.apache.kafka.streams.kstream.Printed;
+
 import com.google.gson.Gson;
 
 import java.time.Duration;
@@ -73,6 +75,9 @@ public class SensorStreamCount
         final KStream<String, SensorVal> valueLines = builder
                     .stream(inputTopic, Consumed.with(Serdes.String(), new SensorValJsonSerde()));
 
+        Printed sysout; 
+
+        valueLines.print(sysout);
         // need to see if we can do something with this?
         //final KStream<String, Map> sensorValues = valueLines.mapValues( (v -> gson.fromJson(v, Map.class)));
 
