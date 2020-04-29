@@ -18,7 +18,7 @@ public class SensorVal {
     @Override
     public String toString() {
         
-        String stamp = this.datetime; + " " + this.reading;
+        String stamp = this.datetime + " " + this.reading;
         
         return stamp;
     }
