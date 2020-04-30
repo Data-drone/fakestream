@@ -6,38 +6,38 @@ package model;
 
 public class SensorVal {
 
-    private String datetime;
-    private float reading;
+    private String timestamp;
+    private float value;
     
     public SensorVal(String source_timestamp, float source_reading) {
-            this.datetime = source_timestamp;
-            this.reading = source_reading;
+            this.timestamp = source_timestamp;
+            this.value = source_reading;
     }
 
 
     @Override
     public String toString() {
         
-        String stamp = this.datetime + " " + this.reading;
+        String stamp = this.timestamp + " " + this.value;
         
         return stamp;
     }
 
 
     public void setDatetime(String stamp){
-        this.datetime = stamp;
+        this.timestamp = stamp;
     }
 
     public void setReading(Float value){
-        this.reading = value;
+        this.value = value;
     }
 
     public String getDatetime() {
-        return this.datetime;
+        return this.timestamp;
     }
 
     public Float getReading(){
-        return this.reading;
+        return this.value;
     }
     
 }

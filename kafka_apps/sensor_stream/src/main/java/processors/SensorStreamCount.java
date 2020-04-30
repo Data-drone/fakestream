@@ -77,9 +77,9 @@ public class SensorStreamCount
         final KStream<String, SensorVal> valueLines = builder
                     .stream(inputTopic, Consumed.with(Serdes.String(), new SensorValJsonSerde()));
 
-        // Printed sysout = Printed.<String, SensorVal>toSysOut(); 
+        Printed sysout = Printed.<String, SensorVal>toSysOut(); 
 
-        // valueLines.print(sysout);
+        valueLines.print(sysout);
         // need to see if we can do something with this?
         //final KStream<String, Map> sensorValues = valueLines.mapValues( (v -> gson.fromJson(v, Map.class)));
 
