@@ -12,6 +12,8 @@ import org.apache.kafka.streams.kstream.Produced;
 import org.apache.kafka.streams.kstream.TimeWindows;
 import org.apache.kafka.streams.kstream.internals.TimeWindow;
 import org.apache.kafka.streams.kstream.Consumed;
+import org.apache.kafka.streams.kstream.Windowed;
+import org.apache.kafka.streams.KeyValue;
 
 import org.apache.kafka.streams.kstream.Printed;
 
@@ -75,9 +77,9 @@ public class SensorStreamCount
         final KStream<String, SensorVal> valueLines = builder
                     .stream(inputTopic, Consumed.with(Serdes.String(), new SensorValJsonSerde()));
 
-        Printed sysout; 
+        // Printed sysout = Printed.<String, SensorVal>toSysOut(); 
 
-        valueLines.print(sysout);
+        // valueLines.print(sysout);
         // need to see if we can do something with this?
         //final KStream<String, Map> sensorValues = valueLines.mapValues( (v -> gson.fromJson(v, Map.class)));
 
@@ -90,8 +92,17 @@ public class SensorStreamCount
                     .groupByKey()
                     .windowedBy(TimeWindows.of(Duration.ofMinutes(1)))
                     .count();
+
+        // Printed sysout2 = Printed.<String, Long>toSysOut();
+
+        //valueCounts.toStream()
+        //            .map((key, value) -> new KeyValue<>(key.key() + "@" + key.window().start() + "->" + key.window().end(), value))
+        //            .print(sysout2);
+                    
             
-        valueCounts.toStream().to(outputTopic, Produced.with(Serdes.String(), Serdes.Long()));
+        valueCounts.toStream()
+                    .map((key, value) -> new KeyValue<>(key.key() + "@" + key.window().start() + "->" + key.window().end(), value))
+                    .to(outputTopic, Produced.with(Serdes.String(), Serdes.Long()));
 
 
     }

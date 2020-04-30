@@ -41,7 +41,7 @@ services:
         build:             
             context: ..
             dockerfile: ./docker/kafka-client/Dockerfile
-        command: ["java", "-cp", "/home/sensor_stream*.jar:*", "kafka_stream.SensorStreamCount"]
+        command: ["java", "-cp", "/home/sensor_stream*.jar:*", "processors.SensorStreamCount"]
         depends_on:
             - kafka
             - zookeeper
