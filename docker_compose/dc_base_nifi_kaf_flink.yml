@@ -2,53 +2,66 @@
 
 version: "3.7"
 services:
-    node:
-        build:
-            context: ../docker/fakestream
-            dockerfile: Dockerfile
-        image: fakestream:latest
-        volumes:
-            - "../scripts:/opt/scripts"
-            - "../scripts/generators:/opt/scripts/generators"
-            - "../scripts/log:/opt/scripts/log"
-        ports:
-            - 8080:8080
-    registry:
-        image: apache/nifi-registry:latest
-        ports:
-            - 18080:18080
-    jobmanager:
-        image: flink:1.10.0-scala_2.11
-        command: "jobmanager.sh start-foreground"
-        ports:
-        - 8081:8081
-        volumes:
-        - ./flink-conf:/opt/flink/conf
-        - flink-checkpoints-directory:/tmp/flink-checkpoints-directory
-        - /tmp/flink-savepoints-directory:/tmp/flink-savepoints-directory
-        environment:
-        - JOB_MANAGER_RPC_ADDRESS=jobmanager
-    taskmanager:
-        image: flink:1.10.0-scala_2.11
-        depends_on:
-        - jobmanager
-        command: "taskmanager.sh start-foreground"
-        volumes:
-        - ./flink-conf:/opt/flink/conf
-        - flink-checkpoints-directory:/tmp/flink-checkpoints-directory
-        - /tmp/flink-savepoints-directory:/tmp/flink-savepoints-directory
-        environment:
-        - JOB_MANAGER_RPC_ADDRESS=jobmanager
-    zookeeper:
-        image: wurstmeister/zookeeper:3.4.6
-    kafka:
-        image: wurstmeister/kafka:2.12-2.2.1
-        environment:
-            KAFKA_ADVERTISED_LISTENERS: INSIDE://:9092,OUTSIDE://:9094
-            KAFKA_LISTENERS: INSIDE://:9092,OUTSIDE://:9094
-            KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INSIDE:PLAINTEXT,OUTSIDE:PLAINTEXT
-            KAFKA_INTER_BROKER_LISTENER_NAME: INSIDE
-            KAFKA_CREATE_TOPICS: "input:1:1, output:1:1"
-            KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-        ports:
-            - 9094:9094
+  client:
+    build:
+      context: ..
+      dockerfile: ./docker/flink-client/Dockerfile
+      # need edit the jar
+    command: "flink run -d -p 2 /opt/SensorStream.jar --bootstrap.servers kafka:9092 --checkpointing --event-time"
+    depends_on:
+      - jobmanager
+      - kafka
+    volumes:
+      - ./flink-conf:/opt/flink/conf
+    environment:
+      - JOB_MANAGER_RPC_ADDRESS=jobmanager
+  node:
+    build:
+      context: ../docker/fakestream
+      dockerfile: Dockerfile
+    image: fakestream:latest
+    volumes:
+      - "../scripts:/opt/scripts"
+      - "../scripts/generators:/opt/scripts/generators"
+      - "../scripts/log:/opt/scripts/log"
+    ports:
+      - 8080:8080
+  registry:
+    image: apache/nifi-registry:latest
+    ports:
+      - 18080:18080
+  jobmanager:
+    image: flink:1.10.0-scala_2.11
+    command: "jobmanager.sh start-foreground"
+    ports:
+    - 8081:8081
+    volumes:
+    - ./flink-conf:/opt/flink/conf
+    - ./flink-checkpoints-directory:/tmp/flink-checkpoints-directory
+    - /tmp/flink-savepoints-directory:/tmp/flink-savepoints-directory
+    environment:
+    - JOB_MANAGER_RPC_ADDRESS=jobmanager
+  taskmanager:
+    image: flink:1.10.0-scala_2.11
+    depends_on:
+    - jobmanager
+    command: "taskmanager.sh start-foreground"
+    volumes:
+    - ./flink-conf:/opt/flink/conf
+    - ./flink-checkpoints-directory:/tmp/flink-checkpoints-directory
+    - /tmp/flink-savepoints-directory:/tmp/flink-savepoints-directory
+    environment:
+    - JOB_MANAGER_RPC_ADDRESS=jobmanager
+  zookeeper:
+    image: wurstmeister/zookeeper:3.4.6
+  kafka:
+    image: wurstmeister/kafka:2.12-2.2.1
+    environment:
+      KAFKA_ADVERTISED_LISTENERS: INSIDE://:9092,OUTSIDE://:9094
+      KAFKA_LISTENERS: INSIDE://:9092,OUTSIDE://:9094
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INSIDE:PLAINTEXT,OUTSIDE:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: INSIDE
+      KAFKA_CREATE_TOPICS: "sensors-raw:1:1, sensors-data-count:1:1"
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+    ports:
+      - 9094:9094

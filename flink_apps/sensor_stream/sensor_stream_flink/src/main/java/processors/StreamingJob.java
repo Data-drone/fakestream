@@ -18,7 +18,13 @@
 
 package processors;
 
+import java.util.Properties;
+
+import org.apache.flink.streaming.api.datastream.DataStream;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
+import org.apache.flink.streaming.connectors.kafka.FlinkKafkaConsumer;
+import org.apache.flink.streaming.util.serialization.JSONKeyValueDeserializationSchema;
+import org.apache.flink.shaded.jackson2.com.fasterxml.jackson.databind.node.ObjectNode;
 
 /**
  * Skeleton for a Flink Streaming Job.
@@ -34,10 +40,26 @@ import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
  */
 public class StreamingJob {
 
+	private static String KAFKA_TOPIC_INPUT = "sensors-raw";
+
 	public static void main(String[] args) throws Exception {
+
 		// set up the streaming execution environment
 		final StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
 
+		Properties properties = new Properties();
+		properties.setProperty("bootstrap.servers", "kafka:9092");
+		properties.setProperty("group.id", "test");
+
+		FlinkKafkaConsumer<ObjectNode> sensorConsumer = new FlinkKafkaConsumer(KAFKA_TOPIC_INPUT, 
+				new JSONKeyValueDeserializationSchema(false), properties);
+		
+		DataStream<ObjectNode> stream = env
+			.addSource(sensorConsumer);
+
+		stream.print();
+
+		
 		/*
 		 * Here, you can start creating your execution plan for Flink.
 		 *
