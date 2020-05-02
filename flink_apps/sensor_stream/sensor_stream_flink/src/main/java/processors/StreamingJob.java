@@ -23,7 +23,8 @@ import java.util.Properties;
 import org.apache.flink.streaming.api.datastream.DataStream;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.apache.flink.streaming.connectors.kafka.FlinkKafkaConsumer;
-import org.apache.flink.streaming.util.serialization.JSONKeyValueDeserializationSchema;
+import org.apache.flink.streaming.connectors.kafka.KafkaDeserializationSchema;
+import org.apache.flink.api.common.serialization.SimpleStringSchema;
 import org.apache.flink.shaded.jackson2.com.fasterxml.jackson.databind.node.ObjectNode;
 
 /**
@@ -40,7 +41,7 @@ import org.apache.flink.shaded.jackson2.com.fasterxml.jackson.databind.node.Obje
  */
 public class StreamingJob {
 
-	private static String KAFKA_TOPIC_INPUT = "sensors-raw";
+	//private static String KAFKA_TOPIC_INPUT = "sensors-raw";
 
 	public static void main(String[] args) throws Exception {
 
@@ -51,10 +52,10 @@ public class StreamingJob {
 		properties.setProperty("bootstrap.servers", "kafka:9092");
 		properties.setProperty("group.id", "test");
 
-		FlinkKafkaConsumer<ObjectNode> sensorConsumer = new FlinkKafkaConsumer(KAFKA_TOPIC_INPUT, 
-				new JSONKeyValueDeserializationSchema(false), properties);
+		FlinkKafkaConsumer<String> sensorConsumer = new FlinkKafkaConsumer<>("sensors-raw", 
+				new SimpleStringSchema(), properties);
 		
-		DataStream<ObjectNode> stream = env
+		DataStream<String> stream = env
 			.addSource(sensorConsumer);
 
 		stream.print();
@@ -81,6 +82,6 @@ public class StreamingJob {
 		 */
 
 		// execute program
-		env.execute("Flink Streaming Java API Skeleton");
+		env.execute("Sensor Stream Java App");
 	}
 }
