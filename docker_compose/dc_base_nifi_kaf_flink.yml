@@ -2,6 +2,17 @@
 
 version: "3.7"
 services:
+  # dev images to speed up build and test
+  dev-build:
+    image: maven:3.6-jdk-8-slim
+    volumes:
+      - ../flink_apps:/opt/flink
+  dev-deploy:
+    image: flink:1.10.0-scala_2.11
+    volumes:
+      - ./flink-conf:/opt/flink/conf
+      - ../flink_apps:/opt/flink 
+  # regular deploy jobs
   client:
     build:
       context: ..

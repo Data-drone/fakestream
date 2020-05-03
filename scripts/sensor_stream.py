@@ -52,7 +52,7 @@ def generate_sensor(sensor_name,
             for element in data:
                 data_dict = {'timestamp': element[0], 'value': element[1]}
                 try:
-                    producer.produce('sensors-raw', key=sensor_name, 
+                    producer.produce('sensors-raw', key=json.dumps({'sensor': sensor_name}), 
                                             value=json.dumps(data_dict,default = myconverter))
 
                     # clean up the queue to avert the buffer crash
