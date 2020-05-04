@@ -22,9 +22,11 @@ import org.apache.flink.api.common.functions.FlatMapFunction;
 import org.apache.flink.api.java.tuple.Tuple2;
 import org.apache.flink.api.java.tuple.Tuple3;
 
+import org.apache.flink.streaming.api.TimeCharacteristic;
 import org.apache.flink.streaming.api.datastream.DataStream;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.apache.flink.streaming.api.windowing.assigners.SlidingEventTimeWindows;
+import org.apache.flink.streaming.api.windowing.assigners.TumblingEventTimeWindows;
 import org.apache.flink.streaming.api.windowing.time.Time;
 import org.apache.flink.streaming.connectors.kafka.FlinkKafkaConsumer;
 import org.apache.flink.streaming.util.serialization.JSONKeyValueDeserializationSchema;
@@ -34,6 +36,9 @@ import org.apache.flink.util.Collector;
 import org.apache.flink.shaded.jackson2.com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.util.Properties;
+import java.text.SimpleDateFormat;
+import java.sql.Timestamp;  
+import java.text.DateFormat;
 
 //import org.apache.flink.shaded.jackson2.com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -60,6 +65,9 @@ public class StreamingJob {
 		// set up the streaming execution environment
 		final StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
 
+		// try using the processing time
+		env.setStreamTimeCharacteristic(TimeCharacteristic.ProcessingTime);
+
 		Properties properties = new Properties();
 		properties.setProperty("bootstrap.servers", "kafka:9092");
 		properties.setProperty("group.id", "test");
@@ -69,14 +77,16 @@ public class StreamingJob {
 		FlinkKafkaConsumer<ObjectNode> sensorConsumer = new FlinkKafkaConsumer(KAFKA_TOPIC_INPUT, 
 				new JSONKeyValueDeserializationSchema(false), properties);
 		
-		DataStream<Tuple3<String, String, Float>> stream = env
+		DataStream<Tuple3<String, String, Double>> stream = env
 			.addSource(sensorConsumer)
 			.flatMap(new SelectKeyAndFlatMap())
+			// assign timestamp
 			.keyBy(0)
-			.window(SlidingEventTimeWindows.of(Time.seconds(10), Time.seconds(5)))
+			.window(TumblingEventTimeWindows.of(Time.seconds(5)))
+			//.window(SlidingEventTimeWindows.of(Time.seconds(10), Time.seconds(5)))
 			.sum(2);
 
-		
+		stream.print();
 		/*
 		 * Here, you can start creating your execution plan for Flink.
 		 *
@@ -103,14 +113,20 @@ public class StreamingJob {
 
 	
 	// Map the ObjectNode to a Tuple3
-	public static class SelectKeyAndFlatMap implements FlatMapFunction<ObjectNode, Tuple3<String, String, Float>> {
+	public static class SelectKeyAndFlatMap implements FlatMapFunction<ObjectNode, Tuple3<String, String, Double>> {
+
+		final String formatDate = "yyyy-MM-dd HH:mm:ss.SSSSSS";
 
 		@Override
-		public void FlatMap(ObjectNode kafMsg, Collector<Tuple3<String, String, Float>> out) throws Exception {
+		public void flatMap(ObjectNode kafMsg, Collector<Tuple3<String, String, Double>> out) throws Exception {
 
-			String key = kafMsg.get("key").get("sensor");
-			String timestamp = kafMsg.get("value").get("timestamp");
-			Float value = kafMsg.get("value").get("value");
+			//DateFormat formatter = new SimpleDateFormat(formatDate);
+
+			String key = kafMsg.get("key").get("sensor").asText();
+			String timestamp = kafMsg.get("value").get("timestamp").asText();
+			// convert to java timestamp?
+			//Timestamp ts = Timestamp.valueOf(formatter.format(timestamp));
+			Double value = kafMsg.get("value").get("value").asDouble();
 
 			out.collect(new Tuple3<>(key, timestamp, value));
 			
