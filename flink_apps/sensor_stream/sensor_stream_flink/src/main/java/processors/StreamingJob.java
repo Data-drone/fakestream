@@ -18,15 +18,25 @@
 
 package processors;
 
-import java.util.Properties;
+import org.apache.flink.api.common.functions.FlatMapFunction;
+import org.apache.flink.api.java.tuple.Tuple2;
+import org.apache.flink.api.java.tuple.Tuple3;
 
 import org.apache.flink.streaming.api.datastream.DataStream;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
+import org.apache.flink.streaming.api.windowing.assigners.SlidingEventTimeWindows;
+import org.apache.flink.streaming.api.windowing.time.Time;
 import org.apache.flink.streaming.connectors.kafka.FlinkKafkaConsumer;
-import org.apache.flink.streaming.connectors.kafka.KafkaDeserializationSchema;
-import org.apache.flink.api.common.serialization.SimpleStringSchema;
-import org.apache.flink.shaded.jackson2.com.fasterxml.jackson.databind.node.ObjectNode;
 import org.apache.flink.streaming.util.serialization.JSONKeyValueDeserializationSchema;
+
+import org.apache.flink.util.Collector;
+
+import org.apache.flink.shaded.jackson2.com.fasterxml.jackson.databind.node.ObjectNode;
+
+import java.util.Properties;
+
+//import org.apache.flink.shaded.jackson2.com.fasterxml.jackson.databind.ObjectMapper;
+
 
 
 /**
@@ -59,10 +69,12 @@ public class StreamingJob {
 		FlinkKafkaConsumer<ObjectNode> sensorConsumer = new FlinkKafkaConsumer(KAFKA_TOPIC_INPUT, 
 				new JSONKeyValueDeserializationSchema(false), properties);
 		
-		DataStream<ObjectNode> stream = env
-			.addSource(sensorConsumer);
-
-		stream.print();
+		DataStream<Tuple3<String, String, Float>> stream = env
+			.addSource(sensorConsumer)
+			.flatMap(new SelectKeyAndFlatMap())
+			.keyBy(0)
+			.window(SlidingEventTimeWindows.of(Time.seconds(10), Time.seconds(5)))
+			.sum(2);
 
 		
 		/*
@@ -86,6 +98,24 @@ public class StreamingJob {
 		 */
 
 		// execute program
-		env.execute("Sensor Stream Java App");
+		env.execute("Sensor Stream Java App- 1");
 	}
+
+	
+	// Map the ObjectNode to a Tuple3
+	public static class SelectKeyAndFlatMap implements FlatMapFunction<ObjectNode, Tuple3<String, String, Float>> {
+
+		@Override
+		public void FlatMap(ObjectNode kafMsg, Collector<Tuple3<String, String, Float>> out) throws Exception {
+
+			String key = kafMsg.get("key").get("sensor");
+			String timestamp = kafMsg.get("value").get("timestamp");
+			Float value = kafMsg.get("value").get("value");
+
+			out.collect(new Tuple3<>(key, timestamp, value));
+			
+		}
+
+	}
+	
 }

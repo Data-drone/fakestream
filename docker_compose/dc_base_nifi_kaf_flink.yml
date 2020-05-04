@@ -11,7 +11,7 @@ services:
     image: flink:1.10.0-scala_2.11
     volumes:
       - ./flink-conf:/opt/flink/conf
-      - ../flink_apps:/opt/flink 
+      - ../flink_apps:/opt/flink/apps 
   # regular deploy jobs
   client:
     build:
