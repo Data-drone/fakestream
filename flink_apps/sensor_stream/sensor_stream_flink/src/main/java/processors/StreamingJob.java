@@ -25,6 +25,7 @@ import org.apache.flink.api.java.tuple.Tuple3;
 import org.apache.flink.streaming.api.TimeCharacteristic;
 import org.apache.flink.streaming.api.datastream.DataStream;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
+import org.apache.flink.streaming.api.functions.AscendingTimestampExtractor;
 import org.apache.flink.streaming.api.windowing.assigners.SlidingEventTimeWindows;
 import org.apache.flink.streaming.api.windowing.assigners.TumblingEventTimeWindows;
 import org.apache.flink.streaming.api.windowing.time.Time;
@@ -66,7 +67,7 @@ public class StreamingJob {
 		final StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
 
 		// try using the processing time
-		env.setStreamTimeCharacteristic(TimeCharacteristic.ProcessingTime);
+		//env.setStreamTimeCharacteristic(TimeCharacteristic.EventTimeWindows);
 
 		Properties properties = new Properties();
 		properties.setProperty("bootstrap.servers", "kafka:9092");
@@ -77,10 +78,18 @@ public class StreamingJob {
 		FlinkKafkaConsumer<ObjectNode> sensorConsumer = new FlinkKafkaConsumer(KAFKA_TOPIC_INPUT, 
 				new JSONKeyValueDeserializationSchema(false), properties);
 		
-		DataStream<Tuple3<String, String, Double>> stream = env
+		DataStream<Tuple3<String, Timestamp, Double>> stream = env
 			.addSource(sensorConsumer)
 			.flatMap(new SelectKeyAndFlatMap())
 			// assign timestamp
+			.assignTimestampsAndWatermarks(new AscendingTimestampExtractor<Tuple3<String, Timestamp, Double>>() {
+
+				@Override
+				public long extractAscendingTimestamp(Tuple3<String, Timestamp, Double> entry) {
+					long timestamp = entry.f1.getTime();
+					return timestamp;
+				}
+			})
 			.keyBy(0)
 			.window(TumblingEventTimeWindows.of(Time.seconds(5)))
 			//.window(SlidingEventTimeWindows.of(Time.seconds(10), Time.seconds(5)))
@@ -113,22 +122,22 @@ public class StreamingJob {
 
 	
 	// Map the ObjectNode to a Tuple3
-	public static class SelectKeyAndFlatMap implements FlatMapFunction<ObjectNode, Tuple3<String, String, Double>> {
+	public static class SelectKeyAndFlatMap implements FlatMapFunction<ObjectNode, Tuple3<String, Timestamp, Double>> {
 
 		final String formatDate = "yyyy-MM-dd HH:mm:ss.SSSSSS";
 
 		@Override
-		public void flatMap(ObjectNode kafMsg, Collector<Tuple3<String, String, Double>> out) throws Exception {
+		public void flatMap(ObjectNode kafMsg, Collector<Tuple3<String, Timestamp, Double>> out) throws Exception {
 
 			//DateFormat formatter = new SimpleDateFormat(formatDate);
 
 			String key = kafMsg.get("key").get("sensor").asText();
 			String timestamp = kafMsg.get("value").get("timestamp").asText();
 			// convert to java timestamp?
-			//Timestamp ts = Timestamp.valueOf(formatter.format(timestamp));
+			Timestamp ts = Timestamp.valueOf(timestamp);
 			Double value = kafMsg.get("value").get("value").asDouble();
 
-			out.collect(new Tuple3<>(key, timestamp, value));
+			out.collect(new Tuple3<>(key, ts, value));
 			
 		}
 

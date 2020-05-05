@@ -13,6 +13,7 @@ services:
       - ./flink-conf:/opt/flink/conf
       - ../flink_apps:/opt/flink/apps 
   # regular deploy jobs
+  # flink run -d -p 2 /opt/flink/apps/sensor_stream/sensor_stream_flink/target/sensor_stream_flink-1.0-*.jar --bootstrap.servers kafka:9092 --checkpointing
   client:
     build:
       context: ..
