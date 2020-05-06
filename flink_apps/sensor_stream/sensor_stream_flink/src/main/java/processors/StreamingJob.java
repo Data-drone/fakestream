@@ -19,6 +19,7 @@
 package processors;
 
 import org.apache.flink.api.common.functions.FlatMapFunction;
+import org.apache.flink.api.common.functions.MapFunction;
 import org.apache.flink.api.java.tuple.Tuple2;
 import org.apache.flink.api.java.tuple.Tuple3;
 
@@ -30,6 +31,8 @@ import org.apache.flink.streaming.api.windowing.assigners.SlidingEventTimeWindow
 import org.apache.flink.streaming.api.windowing.assigners.TumblingEventTimeWindows;
 import org.apache.flink.streaming.api.windowing.time.Time;
 import org.apache.flink.streaming.connectors.kafka.FlinkKafkaConsumer;
+import org.apache.flink.streaming.connectors.kafka.FlinkKafkaProducer;
+import org.apache.flink.streaming.util.serialization.SimpleStringSchema;
 import org.apache.flink.streaming.util.serialization.JSONKeyValueDeserializationSchema;
 
 import org.apache.flink.util.Collector;
@@ -41,25 +44,10 @@ import java.text.SimpleDateFormat;
 import java.sql.Timestamp;  
 import java.text.DateFormat;
 
-//import org.apache.flink.shaded.jackson2.com.fasterxml.jackson.databind.ObjectMapper;
-
-
-
-/**
- * Skeleton for a Flink Streaming Job.
- *
- * <p>For a tutorial how to write a Flink streaming application, check the
- * tutorials and examples on the <a href="http://flink.apache.org/docs/stable/">Flink Website</a>.
- *
- * <p>To package your application into a JAR file for execution, run
- * 'mvn clean package' on the command line.
- *
- * <p>If you change the name of the main class (with the public static void main(String[] args))
- * method, change the respective entry in the POM.xml file (simply search for 'mainClass').
- */
 public class StreamingJob {
 
 	private static String KAFKA_TOPIC_INPUT = "sensors-raw";
+	private static String KAFKA_TOPIC_OUTPUT = "sensors-data-count";
 
 	public static void main(String[] args) throws Exception {
 
@@ -78,7 +66,7 @@ public class StreamingJob {
 		FlinkKafkaConsumer<ObjectNode> sensorConsumer = new FlinkKafkaConsumer(KAFKA_TOPIC_INPUT, 
 				new JSONKeyValueDeserializationSchema(false), properties);
 		
-		DataStream<Tuple3<String, Timestamp, Double>> stream = env
+		DataStream<Tuple2<String, Integer>> stream = env
 			.addSource(sensorConsumer)
 			.flatMap(new SelectKeyAndFlatMap())
 			// assign timestamp
@@ -90,34 +78,32 @@ public class StreamingJob {
 					return timestamp;
 				}
 			})
+			.flatMap( new FlatMapFunction<Tuple3<String, Timestamp, Double>, Tuple2<String, Integer>>() {
+
+				@Override
+				public void flatMap(Tuple3<String, Timestamp, Double> in, Collector<Tuple2<String, Integer>> out) throws Exception {
+					out.collect(new Tuple2<>(in.f0, 1));
+				}
+			})
 			.keyBy(0)
 			.window(TumblingEventTimeWindows.of(Time.seconds(5)))
 			//.window(SlidingEventTimeWindows.of(Time.seconds(10), Time.seconds(5)))
-			.sum(2);
+			.sum(1);
 
-		stream.print();
-		/*
-		 * Here, you can start creating your execution plan for Flink.
-		 *
-		 * Start with getting some data from the environment, like
-		 * 	env.readTextFile(textPath);
-		 *
-		 * then, transform the resulting DataStream<String> using operations
-		 * like
-		 * 	.filter()
-		 * 	.flatMap()
-		 * 	.join()
-		 * 	.coGroup()
-		 *
-		 * and many more.
-		 * Have a look at the programming guide for the Java API:
-		 *
-		 * http://flink.apache.org/docs/latest/apis/streaming/index.html
-		 *
-		 */
+		FlinkKafkaProducer<String> sensorProducer = new FlinkKafkaProducer<String>("kafka:9092", KAFKA_TOPIC_OUTPUT, new SimpleStringSchema());
+
+		//DataStream<String> stream_out = 
+		stream
+			.map(new MapFunction<Tuple2<String, Integer>, String>() {
+				@Override
+				public String map(Tuple2<String, Integer> tuple) {
+					return tuple.toString();
+				}
+			})
+			.addSink(sensorProducer);
 
 		// execute program
-		env.execute("Sensor Stream Java App- 1");
+		env.execute("Sensor Count Stream");
 	}
 
 	
