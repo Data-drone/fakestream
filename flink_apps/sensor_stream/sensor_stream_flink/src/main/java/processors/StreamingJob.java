@@ -20,6 +20,7 @@ package processors;
 
 import org.apache.flink.api.common.functions.FlatMapFunction;
 import org.apache.flink.api.common.functions.MapFunction;
+import org.apache.flink.api.common.functions.ReduceFunction;
 import org.apache.flink.api.java.tuple.Tuple2;
 import org.apache.flink.api.java.tuple.Tuple3;
 
@@ -84,19 +85,32 @@ public class StreamingJob {
 				public void flatMap(Tuple3<String, Timestamp, Double> in, Collector<Tuple2<String, Integer>> out) throws Exception {
 					out.collect(new Tuple2<>(in.f0, 1));
 				}
-			})
-			.keyBy(r -> r.f1)
+			});
+
+		// debugging - works to here
+		// stream.print();
+
+		DataStream<Tuple2<String, Integer>> groupedStream = stream
+			.keyBy(0)
 			.window(TumblingEventTimeWindows.of(Time.seconds(5)))
 			//.window(SlidingEventTimeWindows.of(Time.seconds(10), Time.seconds(5)))
-			.sum(1);
+			//.sum(1);
+			// try and implement an aggregator
+			.reduce(new ReduceFunction<Tuple2<String, Integer>>() {
+				public Tuple2<String, Integer> reduce (Tuple2<String, Integer> v1, Tuple2<String, Integer> v2) {
+					return new Tuple2<>(v1.f0, v1.f1 + v1.f1);
+				}
+			});
 
-		// debugging
-		stream.print();
+		groupedStream.print();
 
-		FlinkKafkaProducer<String> sensorProducer = new FlinkKafkaProducer<String>("kafka:9092", KAFKA_TOPIC_OUTPUT, new SimpleStringSchema());
+
+		FlinkKafkaProducer<String> sensorProducer = new FlinkKafkaProducer<String>(KAFKA_TOPIC_OUTPUT, 
+																			new SimpleStringSchema(),
+																			properties);
 
 		//DataStream<String> stream_out = 
-		stream
+		groupedStream
 			.map(new MapFunction<Tuple2<String, Integer>, String>() {
 				@Override
 				public String map(Tuple2<String, Integer> tuple) {
