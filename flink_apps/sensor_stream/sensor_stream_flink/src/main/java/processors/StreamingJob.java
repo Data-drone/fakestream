@@ -59,7 +59,7 @@ public class StreamingJob {
 
 		Properties properties = new Properties();
 		properties.setProperty("bootstrap.servers", "kafka:9092");
-		properties.setProperty("group.id", "test");
+		properties.setProperty("group.id", "t432");
 
 		//FlinkKafkaConsumer<String> sensorConsumer = new FlinkKafkaConsumer<>("sensors-raw", 
 		//		new SimpleStringSchema(), properties);
@@ -85,10 +85,13 @@ public class StreamingJob {
 					out.collect(new Tuple2<>(in.f0, 1));
 				}
 			})
-			.keyBy(0)
+			.keyBy(r -> r.f1)
 			.window(TumblingEventTimeWindows.of(Time.seconds(5)))
 			//.window(SlidingEventTimeWindows.of(Time.seconds(10), Time.seconds(5)))
 			.sum(1);
+
+		// debugging
+		stream.print();
 
 		FlinkKafkaProducer<String> sensorProducer = new FlinkKafkaProducer<String>("kafka:9092", KAFKA_TOPIC_OUTPUT, new SimpleStringSchema());
 
