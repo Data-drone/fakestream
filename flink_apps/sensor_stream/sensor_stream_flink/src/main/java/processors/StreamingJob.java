@@ -27,7 +27,7 @@ import org.apache.flink.api.java.tuple.Tuple3;
 import org.apache.flink.streaming.api.TimeCharacteristic;
 import org.apache.flink.streaming.api.datastream.DataStream;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
-import org.apache.flink.streaming.api.functions.AscendingTimestampExtractor;
+import org.apache.flink.streaming.api.functions.timestamps.BoundedOutOfOrdernessTimestampExtractor;
 import org.apache.flink.streaming.api.windowing.assigners.SlidingEventTimeWindows;
 import org.apache.flink.streaming.api.windowing.assigners.TumblingEventTimeWindows;
 import org.apache.flink.streaming.api.windowing.time.Time;
@@ -56,7 +56,8 @@ public class StreamingJob {
 		final StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
 
 		// try using the processing time
-		//env.setStreamTimeCharacteristic(TimeCharacteristic.EventTimeWindows);
+		env.setStreamTimeCharacteristic(TimeCharacteristic.EventTime);
+		env.getConfig().setAutoWatermarkInterval(10000);
 
 		Properties properties = new Properties();
 		properties.setProperty("bootstrap.servers", "kafka:9092");
@@ -71,10 +72,10 @@ public class StreamingJob {
 			.addSource(sensorConsumer)
 			.flatMap(new SelectKeyAndFlatMap())
 			// assign timestamp
-			.assignTimestampsAndWatermarks(new AscendingTimestampExtractor<Tuple3<String, Timestamp, Double>>() {
+			.assignTimestampsAndWatermarks(new BoundedOutOfOrdernessTimestampExtractor<Tuple3<String, Timestamp, Double>>(Time.seconds(10)) {
 
 				@Override
-				public long extractAscendingTimestamp(Tuple3<String, Timestamp, Double> entry) {
+				public long extractTimestamp(Tuple3<String, Timestamp, Double> entry) {
 					long timestamp = entry.f1.getTime();
 					return timestamp;
 				}
