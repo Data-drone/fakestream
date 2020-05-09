@@ -45,6 +45,11 @@ import java.text.SimpleDateFormat;
 import java.sql.Timestamp;  
 import java.text.DateFormat;
 
+/*
+*  Collects sensor readings and counts how many readings per sensor are received in each 5 seconds
+*  Watermarking occurs every 10 seconds to allow for lateness
+*/
+
 public class StreamingJob {
 
 	private static String KAFKA_TOPIC_INPUT = "sensors-raw";
@@ -63,8 +68,6 @@ public class StreamingJob {
 		properties.setProperty("bootstrap.servers", "kafka:9092");
 		properties.setProperty("group.id", "t432");
 
-		//FlinkKafkaConsumer<String> sensorConsumer = new FlinkKafkaConsumer<>("sensors-raw", 
-		//		new SimpleStringSchema(), properties);
 		FlinkKafkaConsumer<ObjectNode> sensorConsumer = new FlinkKafkaConsumer(KAFKA_TOPIC_INPUT, 
 				new JSONKeyValueDeserializationSchema(false), properties);
 		
@@ -86,32 +89,17 @@ public class StreamingJob {
 				public void flatMap(Tuple3<String, Timestamp, Double> in, Collector<Tuple2<String, Integer>> out) throws Exception {
 					out.collect(new Tuple2<>(in.f0, 1));
 				}
-			});
-
-		// debugging - works to here
-		// stream.print();
-
-		DataStream<Tuple2<String, Integer>> groupedStream = stream
+			})
 			.keyBy(0)
 			.window(TumblingEventTimeWindows.of(Time.seconds(5)))
-			//.window(SlidingEventTimeWindows.of(Time.seconds(10), Time.seconds(5)))
-			//.sum(1);
-			// try and implement an aggregator
-			.reduce(new ReduceFunction<Tuple2<String, Integer>>() {
-				public Tuple2<String, Integer> reduce (Tuple2<String, Integer> v1, Tuple2<String, Integer> v2) {
-					return new Tuple2<>(v1.f0, v1.f1 + v1.f1);
-				}
-			});
-
-		groupedStream.print();
-
+			.sum(1);
 
 		FlinkKafkaProducer<String> sensorProducer = new FlinkKafkaProducer<String>(KAFKA_TOPIC_OUTPUT, 
 																			new SimpleStringSchema(),
 																			properties);
 
-		//DataStream<String> stream_out = 
-		groupedStream
+
+		stream
 			.map(new MapFunction<Tuple2<String, Integer>, String>() {
 				@Override
 				public String map(Tuple2<String, Integer> tuple) {
