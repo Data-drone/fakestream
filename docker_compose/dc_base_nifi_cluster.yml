@@ -7,9 +7,13 @@ services:
     environment:
       - ALLOW_ANONYMOUS_LOGIN=yes
   nifi:
-    image: apache/nifi:latest
+    image: fakestream:latest
+    volumes:
+      - "../scripts:/opt/scripts"
+      - "../scripts/generators:/opt/scripts/generators"
+      - "../scripts/log:/opt/scripts/log"
     ports:
-      - 8080 # Unsecured HTTP Web Port
+      - 8080:8080 # Unsecured HTTP Web Port
     environment:
       - NIFI_WEB_HTTP_PORT=8080
       - NIFI_CLUSTER_IS_NODE=true

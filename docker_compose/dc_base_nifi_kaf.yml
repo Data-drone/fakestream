@@ -1,0 +1,34 @@
+# quick demo script with nifi and kafka with a registry too
+
+version: "3.7"
+services:
+  # regular deploy jobs
+  # flink run -d -p 2 /opt/flink/apps/sensor_stream/sensor_stream_flink/target/sensor_stream_flink-1.0-*.jar --bootstrap.servers kafka:9092 --checkpointing
+  node:
+    build:
+      context: ../docker/fakestream
+      dockerfile: Dockerfile
+    image: fakestream:latest
+    volumes:
+      - "../scripts:/opt/scripts"
+      - "../scripts/generators:/opt/scripts/generators"
+      - "../scripts/log:/opt/scripts/log"
+    ports:
+      - 8080:8080
+  registry:
+    image: apache/nifi-registry:latest
+    ports:
+      - 18080:18080
+  zookeeper:
+    image: wurstmeister/zookeeper:3.4.6
+  kafka:
+    image: wurstmeister/kafka:2.12-2.4.1
+    environment:
+      KAFKA_ADVERTISED_LISTENERS: INSIDE://:9092,OUTSIDE://:9094
+      KAFKA_LISTENERS: INSIDE://:9092,OUTSIDE://:9094
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INSIDE:PLAINTEXT,OUTSIDE:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: INSIDE
+      KAFKA_CREATE_TOPICS: "sensors-raw:1:1, sensors-data-count:1:1"
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+    ports:
+      - 9094:9094
