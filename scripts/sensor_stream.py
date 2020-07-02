@@ -31,11 +31,9 @@ def delivery_report(err, msg):
         print('Message delivered to {} [{}]'.format(msg.topic(), msg.partition()))
 
 
-def myconverter(o):
+def myconverter(o: object):
     """
-
-    json converter to make sure the date time is parsed properly
-
+    json converter to make sure the date time is stored as a string
     """
     if isinstance(o, datetime.datetime):
         return o.__str__()
@@ -101,7 +99,8 @@ if __name__ == '__main__':
 
     # we emit straight to kafka as we need the series to continue
     # Execute Process will recycle over and over
-    
+    # TODO add code to create topic to write to and partition too perhaps
+    # see: create_topics in https://docs.confluent.io/current/clients/confluent-kafka-python/#
 
     parser = make_parser()
     args = parser.parse_args()
