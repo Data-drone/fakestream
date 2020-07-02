@@ -11,6 +11,9 @@ RUN apt-get -y update && \
 
 COPY requirements.txt /tmp/requirements.txt
 
+# fix for confluent-kafka
+RUN pip3 uninstall -y pyOpenssl
+
 RUN pip3 install -r /tmp/requirements.txt
 
 #COPY ../scripts /tmp/scripts
