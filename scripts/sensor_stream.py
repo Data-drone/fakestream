@@ -41,8 +41,18 @@ def myconverter(o):
         return o.__str__()
 
 
-def generate_sensor(sensor_name, 
-                    tuples, config):
+def generate_sensor(sensor_name: str, 
+                    tuples: int, config: dict):
+    """
+    Parameters
+    ---------
+    sensor_name: str
+        name of the sensor
+    tuples: int
+        number of data tuples per emit event to kafka
+    config: dict
+        dict object with kafka connection and broker details
+    """
 
     gen = SensorGenerator(batch = tuples)
     producer = Producer(config)
