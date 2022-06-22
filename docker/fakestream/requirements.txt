@@ -1,5 +1,5 @@
 Faker==3.0.0
-numpy==1.18.1
+numpy==1.22.0
 nipyapi==0.14.0
 dict2xml==1.6.1
 confluent-kafka==1.4.2
